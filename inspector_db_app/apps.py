@@ -15,6 +15,7 @@ def create_default_user():
         password = 'p'
     else:
         password = postgresql_env_credentials['password']
+    # noinspection PyUnresolvedReferences
     try:
         default_user = User.objects.get_by_natural_key(DEFAULT_USERNAME)
     except User.DoesNotExist:
