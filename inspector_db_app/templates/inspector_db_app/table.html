@@ -1,24 +1,23 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-<link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
-
-{% if column_names %}
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-            {% for column in column_names %}
-            <th scope="col">{{column}}</th>
+{% include "common/bootstrap.html" %}
+<div class="container">
+    {% if column_names %}
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                {% for column in column_names %}
+                <th scope="col">{{column}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in records %}
+            <tr>
+                {% for v in row %}
+                <td>{{v}}</td>
+                {% endfor %}
+            </tr>
             {% endfor %}
-        </tr>
-    </thead>
-    <tbody>
-        {% for row in records %}
-        <tr>
-            {% for v in row %}
-            <td>{{v}}</td>
-            {% endfor %}
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endif %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
