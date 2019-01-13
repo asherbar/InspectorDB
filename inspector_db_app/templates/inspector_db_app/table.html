@@ -1,5 +1,7 @@
-{% include "common/bootstrap.html" %}
-<div class="container">
+
+{% extends 'inspector_db_app/tables_navigator.html' %}
+
+{% block content %}
     {% if column_names %}
     <table class="table">
         <thead class="thead-dark">
@@ -20,4 +22,4 @@
         </tbody>
     </table>
     {% endif %}
-</div>
+{% endblock %}
