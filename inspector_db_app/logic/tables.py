@@ -9,7 +9,6 @@ logger = get_logger(__name__)
 class Tables:
     def __init__(self):
         self._limit = 100
-        self._public_table_schema_keyword = 'public'
 
     def get_public_tables(self):
         with get_connection() as c:

@@ -1,25 +1,31 @@
-
 {% extends 'inspector_db_app/tables_navigator.html' %}
-
 {% block content %}
+    {% include 'common/table-style.html' %}
     {% if column_names %}
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                {% for column in column_names %}
-                <th scope="col">{{column}}</th>
+    <div class="tableFixHead">
+        <table class="table table-bordered table-fixed" >
+            <thead class="thead-dark">
+                <tr class="header">
+                    {% for column in column_names %}
+                    <th scope="col">{{column}}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in records %}
+                <tr>
+                    {% for v in row %}
+                    <td>{{v}}</td>
+                    {% endfor %}
+                </tr>
                 {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in records %}
-            <tr>
-                {% for v in row %}
-                <td>{{v}}</td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+    <div id="footer">
+        <nav class="navbar fixed-bottom navbar-light bg-faded">
+          <a class="navbar-brand" href="#">Fixed bottom</a>
+        </nav>
+    </div>
     {% endif %}
 {% endblock %}
