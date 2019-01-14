@@ -1,31 +1,41 @@
 {% extends 'inspector_db_app/tables_navigator.html' %}
 {% block content %}
-    {% include 'common/table-style.html' %}
-    {% if column_names %}
+{% include 'common/table-style.html' %}
+{% if column_names %}
+<div>
     <div class="tableFixHead">
-        <table class="table table-bordered table-fixed" >
+        <table class="table table-bordered table-fixed">
+            <caption style="caption-side: top;">{{table_title}}</caption>
             <thead class="thead-dark">
-                <tr class="header">
-                    {% for column in column_names %}
-                    <th scope="col">{{column}}</th>
-                    {% endfor %}
-                </tr>
+            <tr class="header">
+                {% for column in column_names %}
+                <th scope="col">{{column}}</th>
+                {% endfor %}
+            </tr>
             </thead>
             <tbody>
-                {% for row in records %}
-                <tr>
-                    {% for v in row %}
-                    <td>{{v}}</td>
-                    {% endfor %}
-                </tr>
+            {% for row in records %}
+            <tr>
+                {% for v in row %}
+                <td>{{v}}</td>
                 {% endfor %}
+            </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
-    <div id="footer">
-        <nav class="navbar fixed-bottom navbar-light bg-faded">
-          <a class="navbar-brand" href="#">Fixed bottom</a>
-        </nav>
-    </div>
-    {% endif %}
+    <p></p>
+    <form method="get">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">>></span>
+            </div>
+            <input type="text" class="form-control" name="query">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Execute Query</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endif %}
 {% endblock %}
