@@ -3,8 +3,8 @@
 {% include 'common/table-style.html' %}
 {% if column_names %}
 <div>
-    <div class="tableFixHead">
-        <table class="table table-bordered table-fixed">
+    <div class="table-wrap">
+        <table class="table table-bordered">
             <caption style="caption-side: top;">{{table_title}}</caption>
             <thead class="thead-dark">
             <tr class="header">
@@ -25,17 +25,30 @@
         </table>
     </div>
     <p></p>
-    <form method="get">
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">>></span>
-            </div>
-            <input type="text" class="form-control" name="query">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="submit">Execute Query</button>
-            </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">>></span>
         </div>
-    </form>
+        <input type="text" class="form-control" name="query" id="query_input">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="execute_query">Execute Query</button>
+        </div>
+    </div>
+    <div class="table-wrap">
+        <table class="table table-bordered" id="query_result" hidden>
+        </table>
+    </div>
 </div>
 {% endif %}
+{% endblock %}
+{% block footer %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $( "#execute_query" ).click(function() {
+            $.get( "{% url 'query' %}", { query: $( "#query_input" ).val() }, function( data ) {
+                $( "#query_result" ).empty().append( data ).removeAttr('hidden');
+            });
+        });
+    });
+</script>
 {% endblock %}

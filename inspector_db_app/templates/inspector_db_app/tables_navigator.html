@@ -1,22 +1,30 @@
-{% include 'common/bootstrap.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'common/bootstrap.html' %}
+    <title>{% block title %}🕵️{% endblock %}</title>
+</head>
+
+<body>
+
 <div class="container">
 
     <ul class="nav nav-tabs">
         <li class="nav-item">
-        {% if current_table_name %}
+            {% if current_table_name %}
             <a class="nav-link" href="{% url 'table_index' %}">Home</a>
-        {% else %}
+            {% else %}
             <a class="nav-link active" href="#">Home</a>
-        {% endif %}
+            {% endif %}
         </li>
         {% if table_names %}
         {% for table_name in table_names %}
         <li class="nav-item">
-        {% if table_name == current_table_name %}
+            {% if table_name == current_table_name %}
             <a class="nav-link active" href="#">{{table_name}}</a>
-        {% else %}
+            {% else %}
             <a class="nav-link" href="{% url 'table' table_name %}">{{table_name}}</a>
-        {% endif %}
+            {% endif %}
         </li>
         {% endfor %}
         {% endif %}
@@ -24,3 +32,12 @@
     {% block content %}
     {% endblock %}
 </div>
+</body>
+
+<footer>
+    {% include 'common/jquery.html' %}
+    {% block footer %}
+    {% endblock %}
+</footer>
+
+</html>

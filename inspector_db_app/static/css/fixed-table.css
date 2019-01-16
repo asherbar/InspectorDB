@@ -1,2 +1,4 @@
-.tableFixHead    { overflow-y: auto; height: 75%; }
-.tableFixHead th { position: sticky; top: 0; }
+.table-wrap {
+  height: 70vh;
+  overflow-y: auto;
+}
