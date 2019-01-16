@@ -1,17 +1,21 @@
-<caption style="caption-side: top;">{{query_title}}</caption>
-<thead class="thead-dark">
-<tr class="header">
-    {% for column in column_names %}
-    <th scope="col">{{column}}</th>
-    {% endfor %}
-</tr>
-</thead>
-<tbody>
-{% for row in records %}
-<tr>
-    {% for v in row %}
-    <td>{{v}}</td>
-    {% endfor %}
-</tr>
-{% endfor %}
-</tbody>
+<div class="table-wrap">
+    <table class="table table-bordered" id="query_result">
+        <caption style="caption-side: top;">{{query_title}}</caption>
+        <thead class="thead-dark">
+        <tr class="header">
+            {% for column in column_names %}
+            <th scope="col">{{column}}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in records %}
+        <tr>
+            {% for v in row %}
+            <td>{{v}}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

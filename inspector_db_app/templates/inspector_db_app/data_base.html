@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    {% include 'common/bootstrap.html' %}
+    <title>{% block title %}🕵️ D.B.{% endblock %}</title>
+</head>
+
+<body>
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">Inspector D.B.</a>
+    <a class="btn btn-outline-success" href="{% url 'logout' %}" role="button">Logout</a>
+
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    {% if current_table_name %}
+                    <a class="nav-link" href="{% url 'table_index' %}">Home</a>
+                    {% else %}
+                    <a class="nav-link active" href="#">Home</a>
+                    {% endif %}
+                </li>
+                {% if table_names %}
+                {% for table_name in table_names %}
+                <li class="nav-item">
+                    {% if table_name == current_table_name %}
+                    <a class="nav-link active" href="#">{{table_name}}</a>
+                    {% else %}
+                    <a class="nav-link" href="{% url 'table' table_name %}">{{table_name}}</a>
+                    {% endif %}
+                </li>
+                {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+        <div class="col">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">>></span>
+                </div>
+                <input type="text" class="form-control" name="query" id="query_input">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="execute_query">Execute Query</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+
+        <div class="col">
+            <div id="data_area">
+                {% block table_data %}
+                {% endblock %}
+            </div>
+        </div>
+        <div class="col">
+            <div id="query_results_area"></div>
+        </div>
+    </div>
+</div>
+<nav class="navbar navbar-light bg-faded align-middle">
+    <img src="{% static 'assets/GitHub-Mark-32px.png' %}" width="30" height="30" alt="">
+
+</nav>
+</body>
+
+<footer>
+    {% include 'common/jquery.html' %}
+    <script type="text/javascript" src="{% static 'js/update_query_results_area.js' %}" query_url="{% url 'query' %}"
+            id="update_query_results_area"></script>
+    {% block footer %}
+    {% endblock %}
+</footer>
+
+</html>
