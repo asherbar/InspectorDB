@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    {% include 'common/bootstrap.html' %}
+    <title>{% block title %}Inspector D.B.{% endblock %}</title>
+</head>
+
+<body>
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">Inspector D.B.</a>
+    {% if user.is_authenticated %}
+    <a class="btn btn-outline-success" href="{% url 'logout' %}" role="button">Logout</a>
+    {% endif %}
+</nav>
+{% block content %}{% endblock %}
+
+</body>
+
+<footer>
+    {% include 'common/jquery.html' %}
+    <script type="text/javascript" src="{% static 'js/update_query_results_area.js' %}"
+            id="update_query_results_area"></script>
+    <nav class="navbar fixed-bottom navbar-light bg-faded flex-fill justify-content-center">
+            <img src="{% static 'assets/GitHub-Mark-32px.png' %}" width="30" height="30" alt="">
+    </nav>
+    {% block footer %}
+    {% endblock %}
+</footer>
+
+</html>
