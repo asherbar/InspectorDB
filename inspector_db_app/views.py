@@ -2,10 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404
 from django.template import loader
 
-from inspector_db_app.logic.logger_utils import get_logger
-from inspector_db_app.logic.query import Query
-from inspector_db_app.logic.table import Table, TableDoesNotExist
-from inspector_db_app.logic.tables import Tables
+from inspector_db_app.logic.utils.logger_utils import get_logger
+from inspector_db_app.logic.db.query import Query
+from inspector_db_app.logic.db.table import Table, TableDoesNotExist
+from inspector_db_app.logic.db.tables import Tables
 
 logger = get_logger(__name__)
 

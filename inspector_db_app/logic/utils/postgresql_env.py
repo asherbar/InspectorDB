@@ -1,6 +1,6 @@
 from cfenv import AppEnv
 
-from inspector_db_app.logic.logger_utils import get_logger
+from inspector_db_app.logic.utils.logger_utils import get_logger
 
 pg_service = AppEnv().get_service(label='postgresql')
 

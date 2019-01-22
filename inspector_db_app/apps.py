@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
-from inspector_db_app.logic.logger_utils import get_logger
-from inspector_db_app.logic.postgresql_env import postgresql_env_credentials
+from inspector_db_app.logic.utils.logger_utils import get_logger
+from inspector_db_app.logic.utils.postgresql_env import postgresql_env_credentials
 
 DEFAULT_USERNAME = 'a'
 
