@@ -1,4 +1,4 @@
-from inspector_db_app.logic.utils.db_connection import get_connection
+from app.logic.utils.db_connection import get_connection
 
 
 class Query:

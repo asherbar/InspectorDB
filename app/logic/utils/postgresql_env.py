@@ -3,7 +3,7 @@ import os
 
 from cfenv import AppEnv, Service
 
-from inspector_db_app.logic.utils.logger_utils import get_logger
+from app.logic.utils.logger_utils import get_logger
 
 
 # A place holder until https://github.com/jmcarp/py-cfenv/pull/6 is approved

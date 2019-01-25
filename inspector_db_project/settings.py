@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'inspector_db_app',
+    'app',
     'widget_tweaks',
 ]
 
@@ -128,6 +128,6 @@ if not DEBUG:
     X_FRAME_OPTIONS = 'DENY'
     SECURE_HSTS_PRELOAD = True
 
-LOGIN_URL = '/inspector_db_app/login/'
+LOGIN_URL = '/app/login/'
 
-AUTHENTICATION_BACKENDS = ['inspector_db_app.logic.authentication.auth_backend.DbAuthentication']
+AUTHENTICATION_BACKENDS = ['app.logic.authentication.auth_backend.DbAuthentication']

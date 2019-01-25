@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 
-from inspector_db_app.logic.utils.logger_utils import get_logger
-from inspector_db_app.logic.utils.postgresql_env import postgresql_env_credentials
+from app.logic.utils.logger_utils import get_logger
+from app.logic.utils.postgresql_env import postgresql_env_credentials
 
 logger = get_logger(__name__)
 

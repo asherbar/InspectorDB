@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 
-from inspector_db_app.logic.authentication.db_authentication_form import DbAuthenticationForm
+from app.logic.authentication.db_authentication_form import DbAuthenticationForm
 from . import views
 
 urlpatterns = [

@@ -121,4 +121,4 @@ dmypy.json
 manifest.yml
 
 # MacOS
-inspector_db_app/.DS_Store
+app/.DS_Store

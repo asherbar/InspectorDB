@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django.forms import ChoiceField
 
-from inspector_db_app.logic.utils.postgresql_env import get_bound_db_names
+from app.logic.utils.postgresql_env import get_bound_db_names
 
 
 class DbAuthenticationForm(AuthenticationForm):

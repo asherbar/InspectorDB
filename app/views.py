@@ -2,17 +2,17 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404
 from django.template import loader
 
-from inspector_db_app.logic.utils.logger_utils import get_logger
-from inspector_db_app.logic.db.query import Query
-from inspector_db_app.logic.db.table import Table, TableDoesNotExist
-from inspector_db_app.logic.db.tables import Tables
+from app.logic.utils.logger_utils import get_logger
+from app.logic.db.query import Query
+from app.logic.db.table import Table, TableDoesNotExist
+from app.logic.db.tables import Tables
 
 logger = get_logger(__name__)
 
 
 @login_required
 def table_index(request):
-    template = loader.get_template('inspector_db_app/table_index.html')
+    template = loader.get_template('app/table_index.html')
     tables = Tables()
     context = {
         'table_names': tables.get_public_tables()
@@ -22,7 +22,7 @@ def table_index(request):
 
 @login_required
 def get_table(request, table_name):
-    template = loader.get_template('inspector_db_app/table.html')
+    template = loader.get_template('app/table.html')
     try:
         table = Table(table_name)
     except TableDoesNotExist:
@@ -41,7 +41,7 @@ def execute_query(request):
         'column_names': query.get_column_names(),
         'records': query.get_records()
     }
-    template = loader.get_template('inspector_db_app/query.html')
+    template = loader.get_template('app/query.html')
     return HttpResponse(template.render(context, request))
 
 

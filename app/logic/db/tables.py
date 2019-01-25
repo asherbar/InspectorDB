@@ -1,7 +1,7 @@
 from operator import itemgetter
 
-from inspector_db_app.logic.utils.db_connection import get_connection
-from inspector_db_app.logic.utils.logger_utils import get_logger
+from app.logic.utils.db_connection import get_connection
+from app.logic.utils.logger_utils import get_logger
 
 logger = get_logger(__name__)
 

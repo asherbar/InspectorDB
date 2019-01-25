@@ -1,7 +1,7 @@
 import psycopg2
 from psycopg2 import pool
 
-from inspector_db_app.logic.utils.postgresql_env import postgresql_env_credentials
+from app.logic.utils.postgresql_env import postgresql_env_credentials
 
 
 def _create_connection_pool():
