@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 
 from app.logic.utils.logger_utils import get_logger
-from app.logic.utils.postgresql_env import postgresql_env_credentials
+from app.logic.utils.postgresql_env import InspectorDbAppEnv
 
 logger = get_logger(__name__)
 
@@ -29,8 +29,10 @@ class DbAuthentication:
             return None
 
     @classmethod
-    def _is_correct_credentials(cls, bd_name, db_password):
-        if postgresql_env_credentials is None:
+    def _is_correct_credentials(cls, db_name, db_password):
+        db_service_env = InspectorDbAppEnv().get_service(db_name)
+        if db_service_env is None:
             logger.info('Unable to authenticate. Postgres credentials were not provided')
             return False
-        return (bd_name, db_password) == (postgresql_env_credentials['dbname'], postgresql_env_credentials['password'])
+        return (db_name, db_password) == (
+            db_service_env.credentials.get('dbname'), db_service_env.credentials.get('password'))

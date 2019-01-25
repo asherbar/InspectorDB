@@ -3,26 +3,29 @@ import os
 
 from cfenv import AppEnv, Service
 
-from app.logic.utils.logger_utils import get_logger
 
-
-# A place holder until https://github.com/jmcarp/py-cfenv/pull/6 is approved
-class ExtendedAppEnv(AppEnv):
-    def __init__(self):
-        super().__init__()
+def refresh_env(func):
+    def wrapper(self, *args, **kwargs):
+        self._app_env = AppEnv()
         env_services = json.loads(os.getenv('VCAP_SERVICES', '{}'))
-        self.named_services = {service_name: list(map(Service, services_list))
-                               for service_name, services_list in env_services.items()}
+        self._named_services = {service_name: list(map(Service, services_list))
+                                for service_name, services_list in env_services.items()}
+        return func(self, *args, **kwargs)
+
+    return wrapper
 
 
-pg_service = ExtendedAppEnv().get_service(label='postgresql')
+class InspectorDbAppEnv:
 
-logger = get_logger(__name__)
-logger.info('PG service is {}'.format(pg_service))
+    def __init__(self):
+        self._app_env = None
+        self._named_services = None
 
-postgresql_env_credentials = None if pg_service is None else pg_service.credentials
+    @refresh_env
+    def get_bound_db_names(self):
+        return [s.credentials['dbname'] for s in self._named_services.get('postgresql', []) if
+                'dbname' in s.credentials]
 
-
-def get_bound_db_names():
-    return [s.credentials['dbname'] for s in ExtendedAppEnv().named_services.get('postgresql', []) if
-            'dbname' in s.credentials]
+    @refresh_env
+    def get_service(self, db_name):
+        return next((s for s in self._app_env.services if s.credentials.get('dbname') == db_name), None)

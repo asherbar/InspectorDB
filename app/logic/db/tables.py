@@ -7,11 +7,12 @@ logger = get_logger(__name__)
 
 
 class Tables:
-    def __init__(self):
+    def __init__(self, db_name):
+        self._db_name = db_name
         self._limit = 100
 
     def get_public_tables(self):
-        with get_connection() as c:
+        with get_connection(self._db_name) as c:
             cursor = c.cursor()
             cursor.execute("SELECT table_name FROM information_schema.tables WHERE table_schema='public'")
             if cursor.rowcount > self._limit:

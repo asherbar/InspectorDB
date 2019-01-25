@@ -2,10 +2,11 @@ from app.logic.utils.db_connection import get_connection
 
 
 class Query:
-    def __init__(self, query_str, limit=50):
+    def __init__(self, db_name, query_str, limit=50):
+        self._db_name = db_name
         self._limit = limit
         self._query_str = query_str
-        with get_connection() as c:
+        with get_connection(self._db_name) as c:
             self._cursor = c.cursor()
             self._cursor.execute(self._query_str)
 

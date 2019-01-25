@@ -12,8 +12,9 @@ logger = get_logger(__name__)
 
 @login_required
 def table_index(request):
+    db_name = request.user.username
     template = loader.get_template('app/table_index.html')
-    tables = Tables()
+    tables = Tables(db_name)
     context = {
         'table_names': tables.get_public_tables()
     }
@@ -22,12 +23,13 @@ def table_index(request):
 
 @login_required
 def get_table(request, table_name):
+    db_name = request.user.username
     template = loader.get_template('app/table.html')
     try:
-        table = Table(table_name)
+        table = Table(db_name, table_name)
     except TableDoesNotExist:
         raise Http404("Table {} does't exist".format(table_name))
-    tables = Tables()
+    tables = Tables(db_name)
     context = _get_table_context(table, tables)
     return HttpResponse(template.render(context, request))
 
@@ -35,7 +37,8 @@ def get_table(request, table_name):
 @login_required
 def execute_query(request):
     raw_query = request.GET.get('query')
-    query = Query(raw_query)
+    db_name = request.user.username
+    query = Query(db_name, raw_query)
     context = {
         'query_title': raw_query,
         'column_names': query.get_column_names(),
