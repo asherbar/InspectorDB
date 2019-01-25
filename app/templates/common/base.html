@@ -19,10 +19,10 @@
 
 <footer>
     {% include 'common/jquery.html' %}
-    <script type="text/javascript" src="{% static 'js/update_query_results_area.js' %}"
+    <script type="text/javascript" src="{% static 'js/update_query_results_area.js' %}" query_url="{% url 'query' %}"
             id="update_query_results_area"></script>
     <nav class="navbar fixed-bottom navbar-light bg-faded flex-fill justify-content-center">
-            <img src="{% static 'assets/GitHub-Mark-32px.png' %}" width="30" height="30" alt="">
+        <img src="{% static 'assets/GitHub-Mark-32px.png' %}" width="30" height="30" alt="">
     </nav>
     {% block footer %}
     {% endblock %}
