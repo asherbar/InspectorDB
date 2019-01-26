@@ -32,7 +32,7 @@ class DbAuthentication:
     def _is_correct_credentials(cls, db_name, db_password):
         db_service_env = InspectorDbAppEnv().get_service(db_name)
         if db_service_env is None:
-            logger.info('Unable to authenticate. Postgres credentials were not provided')
+            logger.info('Unable to authenticate db with name %s. Postgres credentials were not provided', db_name)
             return False
         return (db_name, db_password) == (
             db_service_env.credentials.get('dbname'), db_service_env.credentials.get('password'))

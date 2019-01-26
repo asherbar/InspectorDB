@@ -15,8 +15,7 @@ def _create_connection_pools():
         try:
             connection_pools[bound_db] = psycopg2.pool.ThreadedConnectionPool(1, 10,
                                                                               user=db_credentials['username'],
-                                                                              password=db_credentials[
-                                                                                  'password'],
+                                                                              password=db_credentials['password'],
                                                                               host=db_credentials['hostname'],
                                                                               port=db_credentials['port'],
                                                                               database=db_credentials['dbname'])
@@ -26,7 +25,7 @@ def _create_connection_pools():
     return connection_pools
 
 
-_connection_pools = _create_connection_pools()
+_connection_pools = None
 
 
 class _PooledConnection:
@@ -45,6 +44,9 @@ class _PooledConnection:
 
 
 def get_connection(db_name):
+    global _connection_pools
+    if _connection_pools is None:
+        _connection_pools = _create_connection_pools()
     connection = _connection_pools[db_name].getconn()
 
     return _PooledConnection(connection, db_name)
