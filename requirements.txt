@@ -4,3 +4,4 @@ psycopg2==2.7.6.1
 gunicorn
 django-widget-tweaks==1.4.3
 docker==3.7.0
+pypika==0.22.3

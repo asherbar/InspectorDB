@@ -1,16 +1,24 @@
 import unittest
 
-from project.test.postgres_container_utils import PostgresContainerManager
+from app.logic.db.query import Query
+from project.test.test_db_utils import fill_test_db
 
 
 class TestQuery(unittest.TestCase):
-    postgres_container_manager = None
+    column_names = ('aaa', 'bbb')
+    db_name = 'test_db'
+    data = [('a', 'b'), ('c', 'd')]
 
-    # @classmethod
-    # def setUpClass(cls):
-    #     cls.postgres_container_manager = PostgresContainerManager()
-    #     cls.postgres_container_manager.run()
-    #
-    # @classmethod
-    # def tearDownClass(cls):
-    #     cls.postgres_container_manager.remove()
+    @classmethod
+    def setUpClass(cls):
+        fill_test_db(cls.db_name, cls.column_names, cls.data)
+
+    def test_query(self):
+        object_under_test = Query(self.db_name, f'SELECT * FROM {self.db_name}')
+        self.assertCountEqual(object_under_test.get_column_names(), self.column_names)
+        self.assertCountEqual(object_under_test.get_records(), self.data)
+
+    def test_query_with_limit(self):
+        object_under_test = Query(self.db_name, f'SELECT * FROM {self.db_name}', 1)
+        self.assertCountEqual(object_under_test.get_column_names(), self.column_names)
+        self.assertCountEqual(object_under_test.get_records(), self.data[:1])
