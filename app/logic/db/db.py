@@ -6,7 +6,7 @@ from app.logic.utils.logger_utils import get_logger
 logger = get_logger(__name__)
 
 
-class Tables:
+class Db:
     def __init__(self, db_name):
         self._db_name = db_name
         self._limit = 100
