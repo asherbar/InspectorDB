@@ -6,12 +6,22 @@ class Query:
         self._db_name = db_name
         self._limit = limit
         self._query_str = query_str
+        self._rows_affected = None
         with get_connection(self._db_name) as c:
             self._cursor = c.cursor()
             self._cursor.execute(self._query_str)
 
     def get_column_names(self):
-        return [desc[0] for desc in self._cursor.description]
+        cursor_description = self._cursor.description
+        return [] if cursor_description is None else [desc[0] for desc in cursor_description]
 
-    def get_records(self):
-        return self._cursor.fetchmany(self._limit)
+    def get_query_result(self):
+        """
+        :return: a list of retrieved rows for DQL statements (like SELECT) or the number of affected rows for DML
+        statements (like UPDATE or INSERT)
+        """
+        return self._cursor.rowcount if self.is_dml else self._cursor.fetchmany(self._limit)
+
+    @property
+    def is_dml(self):
+        return self._cursor.description is None

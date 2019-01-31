@@ -18,5 +18,6 @@ def fill_test_db(table_name, column_names, data):
             create_table_command = 'CREATE TABLE {} ({})'.format(table_name, ', '.join(typed_column_names))
             logger.debug('Creating test database %s', table_name)
             cur.execute(create_table_command)
-            logger.debug('Inserting test data %s', data)
-            cur.execute(insert_data_command)
+            if data:
+                logger.debug('Inserting test data %s', data)
+                cur.execute(insert_data_command)

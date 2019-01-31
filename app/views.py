@@ -2,10 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404
 from django.template import loader
 
-from app.logic.utils.logger_utils import get_logger
 from app.logic.db.query import Query
 from app.logic.db.table import Table, TableDoesNotExist
 from app.logic.db.tables import Tables
+from app.logic.utils.logger_utils import get_logger
 
 logger = get_logger(__name__)
 
@@ -42,7 +42,7 @@ def execute_query(request):
     context = {
         'query_title': raw_query,
         'column_names': query.get_column_names(),
-        'records': query.get_records()
+        'records': query.get_query_result()
     }
     template = loader.get_template('app/query.html')
     return HttpResponse(template.render(context, request))
