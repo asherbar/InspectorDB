@@ -34,12 +34,6 @@ class Table:
             cursor.execute('SELECT * FROM {} LIMIT {}'.format(self._table_name, self._limit))
             return cursor.fetchmany(self._limit)
 
-    def execute_query(self, query):
-        with get_connection(self._db_name) as c:
-            cursor = c.cursor()
-            cursor.execute(query)
-            return cursor.fetchmany(self._limit)
-
     def _table_exists(self):
         with get_connection(self._db_name) as c:
             cursor = c.cursor()
