@@ -22,7 +22,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', False)
+environ_debug_val = os.environ.get('DEBUG', False)
+try:
+    environ_debug_val = int(environ_debug_val)
+except ValueError:
+    # Unable to convert to an integer
+    pass
+
+DEBUG = bool(environ_debug_val)
 
 ALLOWED_HOSTS = ['*']
 
