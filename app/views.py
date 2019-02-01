@@ -1,9 +1,9 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.template import loader
 
 from app.logic.db.db import Db
-from app.logic.db.query import Query
+from app.logic.db.query import Query, QueryExecutionError
 from app.logic.db.table import Table, TableDoesNotExist
 from app.logic.utils.logger_utils import get_logger
 
@@ -38,11 +38,15 @@ def get_table(request, table_name):
 def execute_query(request):
     raw_query = request.GET.get('query')
     db_name = request.user.username
-    query = Query(db_name, raw_query)
+    try:
+        query = Query(db_name, raw_query)
+    except QueryExecutionError as e:
+        return HttpResponseBadRequest(content=str(e))
     context = {
         'query_title': raw_query,
         'column_names': query.get_column_names(),
-        'records': query.get_query_result()
+        'is_dml': query.is_dml,
+        'records': query.get_query_result(),
     }
     template = loader.get_template('app/query.html')
     return HttpResponse(template.render(context, request))

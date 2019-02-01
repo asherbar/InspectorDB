@@ -9,6 +9,9 @@
         </tr>
         </thead>
         <tbody>
+        {% if is_dml %}
+        <tr>Query affected {{records}} records</tr>
+        {% else %}
         {% for row in records %}
         <tr>
             {% for v in row %}
@@ -16,6 +19,7 @@
             {% endfor %}
         </tr>
         {% endfor %}
+        {% endif %}
         </tbody>
     </table>
 </div>

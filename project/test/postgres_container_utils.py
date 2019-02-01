@@ -46,6 +46,7 @@ class PostgresContainerManager:
             logger.info('Removing test container')
             self._running_container.remove(force=True)
             logger.info('Successfully removed test container')
+            self.remove_environ_services_entry()
 
     def get_container_environment_dict(self):
         return {
@@ -82,6 +83,13 @@ class PostgresContainerManager:
             except psycopg2.OperationalError as e:
                 logger.info('Error while testing connection: %s', e)
                 sleep(1)
+
+    def remove_environ_services_entry(self):
+        current_environ_services_entry = os.environ.get('VCAP_SERVICES', '{"postgresql": []}')
+        parsed_environ_services = json.loads(current_environ_services_entry)
+        parsed_environ_services['postgresql'].remove(self.get_container_environment_dict())
+        os.environ['VCAP_SERVICES'] = json.dumps(parsed_environ_services)
+
 
 
 global_pcm = None
