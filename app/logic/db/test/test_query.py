@@ -39,6 +39,8 @@ class TestQuery(unittest.TestCase):
         )
         self.assertFalse(object_under_test.get_column_names())
         self.assertEqual(object_under_test.get_query_result(), 1)
+        object_under_test = Query(global_pcm.pg_db_name, f'SELECT * FROM {self.table_name}')
+        self.assertCountEqual(object_under_test.get_query_result(), [('c', 'b'), ('c', 'd')])
 
     def test_write_query_empty_table(self):
         empty_table_name = self.table_name + '2'

@@ -8,8 +8,8 @@ logger = get_logger(__name__)
 
 
 class QueryExecutionError(InspectorDbException):
-    def __init__(self, query_str):
-        super().__init__(f'Error while trying to execute query "{query_str}"')
+    def __init__(self, query_str, cause_exception):
+        super().__init__(f'An error occurred while trying to execute query "{query_str}".\nError: {cause_exception}')
 
 
 class Query:
@@ -24,7 +24,9 @@ class Query:
                 self._cursor.execute(self._query_str)
             except psycopg2.ProgrammingError as e:
                 logger.error('Error while trying to execute query "%s"', self._query_str, e)
-                raise QueryExecutionError(self._query_str) from e
+                raise QueryExecutionError(self._query_str, e) from e
+            if self.is_dml:
+                c.commit()
 
     def get_column_names(self):
         cursor_description = self._cursor.description

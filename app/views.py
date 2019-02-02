@@ -1,10 +1,12 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, Http404, HttpResponseBadRequest
+from django.http import HttpResponse, Http404
+from django.shortcuts import redirect
 from django.template import loader
 
 from app.logic.db.db import Db
 from app.logic.db.query import Query, QueryExecutionError
 from app.logic.db.table import Table, TableDoesNotExist
+from app.logic.utils.db_connection import DbConnectionError
 from app.logic.utils.logger_utils import get_logger
 
 logger = get_logger(__name__)
@@ -13,12 +15,18 @@ logger = get_logger(__name__)
 @login_required
 def table_index(request):
     db_name = request.user.username
-    template = loader.get_template('app/table_index.html')
-    tables = Db(db_name)
-    context = {
-        'table_names': tables.get_public_tables()
-    }
-    return HttpResponse(template.render(context, request))
+
+    db = Db(db_name)
+    try:
+        public_tables = db.get_public_tables()
+    except DbConnectionError:
+        return HttpResponse('No connection')
+    default_table_name = next(public_tables, None)
+    if default_table_name is not None:
+        return redirect('table', table_name=default_table_name)
+    else:
+        template = loader.get_template('app/table_index.html')
+        return HttpResponse(template.render(request=request))
 
 
 @login_required
@@ -38,17 +46,22 @@ def get_table(request, table_name):
 def execute_query(request):
     raw_query = request.GET.get('query')
     db_name = request.user.username
+    template = loader.get_template('app/query.html')
     try:
         query = Query(db_name, raw_query)
     except QueryExecutionError as e:
-        return HttpResponseBadRequest(content=str(e))
+        context = {
+            'query_error': True,
+            'error_msg': str(e)
+        }
+        return HttpResponse(template.render(context, request))
     context = {
+        'query_error': False,
         'query_title': raw_query,
         'column_names': query.get_column_names(),
         'is_dml': query.is_dml,
         'records': query.get_query_result(),
     }
-    template = loader.get_template('app/query.html')
     return HttpResponse(template.render(context, request))
 
 

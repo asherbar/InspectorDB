@@ -3,8 +3,14 @@ from psycopg2 import pool
 
 from app.logic.utils.logger_utils import get_logger
 from app.logic.utils.postgresql_env import InspectorDbAppEnv
+from project.common.exception import InspectorDbException
 
 logger = get_logger(__name__)
+
+
+class DbConnectionError(InspectorDbException):
+    def __init__(self, db_credentials):
+        super().__init__(f'Error while trying to connect to DB with credentials {db_credentials}')
 
 
 def _create_connection_pools():
@@ -22,6 +28,10 @@ def _create_connection_pools():
         except KeyError as e:
             logger.error('Unable to initialize DB with name %s. Missing "%s" key from credentials. Got: %s', bound_db,
                          e.args[0], db_credentials)
+        except psycopg2.OperationalError as e:
+            logger.error('Error while trying to connect to DB with credentials %s', db_credentials, e)
+            raise DbConnectionError(db_credentials) from e
+
     return connection_pools
 
 
