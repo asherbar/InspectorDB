@@ -17,16 +17,29 @@ def table_index(request):
     db_name = request.user.username
 
     db = Db(db_name)
+    template = loader.get_template('app/table_index.html')
     try:
         public_tables = db.get_public_tables()
-    except DbConnectionError:
-        return HttpResponse('No connection')
+    except DbConnectionError as e:
+        context = {
+            'connection_error': True,
+            'connection_error_msg': str(e),
+            'db_name': db_name
+
+        }
+        return HttpResponse(template.render(context, request))
     default_table_name = next(public_tables, None)
     if default_table_name is not None:
-        return redirect('table', table_name=default_table_name)
+        return redirect(get_table.view_name, table_name=default_table_name)
     else:
-        template = loader.get_template('app/table_index.html')
-        return HttpResponse(template.render(request=request))
+        context = {
+            'no_tables': True,
+            'db_name': db_name
+        }
+        return HttpResponse(template.render(context, request))
+
+
+table_index.view_name = 'table_index'
 
 
 @login_required
@@ -37,9 +50,14 @@ def get_table(request, table_name):
         table = Table(db_name, table_name)
     except TableDoesNotExist:
         raise Http404("Table {} does't exist".format(table_name))
+    except DbConnectionError:
+        return redirect(table_index.view_name)
     db = Db(db_name)
     context = _get_table_context(table, db)
     return HttpResponse(template.render(context, request))
+
+
+get_table.view_name = 'table'
 
 
 @login_required
@@ -63,6 +81,9 @@ def execute_query(request):
         'records': query.get_query_result(),
     }
     return HttpResponse(template.render(context, request))
+
+
+execute_query.view_name = 'query'
 
 
 def _get_table_context(table, db):

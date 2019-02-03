@@ -1,5 +1,18 @@
 {% extends 'app/data_base.html' %}
 
 {% block content %}
-<p>No tables found to inspect</p>
+<div class="container">
+    <p class="lead">
+        {% if connection_error %}
+        Unable to connect to database <i>"{{ db_name }}"</i>.
+        <small class="text-muted">
+            Please make sure the credentials given in the VCAP_SERVICES environment variables are correct, and that the
+            database is running and accepting connections
+        </small>
+        {% elif no_tables %}
+        No tables found to inspect in DB <i>"{{ db_name }}"</i>
+        {% endif%}
+    </p>
+</div>
+
 {% endblock %}

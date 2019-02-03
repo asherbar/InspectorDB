@@ -1,8 +1,49 @@
+from unittest.mock import patch
+
 from django.test import TestCase, Client
 from pypika import Query
 
+from app.logic.db.db import Db
+from app.logic.utils.db_connection import DbConnectionError
 from project.test.postgres_container_utils import global_pcm
 from project.test.test_db_utils import TestDbFiller
+
+
+class TestIndexView(TestCase):
+    path = '/app/'
+
+    def test_no_tables(self):
+        c = Client()
+        logged_in = c.login(username=global_pcm.pg_db_name, password=global_pcm.pg_password)
+        self.assertTrue(logged_in)
+        response = c.get(self.path)
+        self.assertContains(response, 'No tables found to inspect in DB')
+
+    def test_not_authenticated(self):
+        c = Client()
+        response = c.get(self.path, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertCountEqual(response.redirect_chain, [('/app/login/?next=/app/', 302)])
+
+    def test_connection_error(self):
+        c = Client()
+        logged_in = c.login(username=global_pcm.pg_db_name, password=global_pcm.pg_password)
+        self.assertTrue(logged_in)
+        with patch.object(Db, 'get_public_tables', side_effect=DbConnectionError({'some': 'creds'})) as mock_method:
+            response = c.get(self.path)
+        self.assertContains(response, 'Unable to connect to database')
+        mock_method.assert_called()
+
+    def test_has_tables(self):
+        c = Client()
+        logged_in = c.login(username=global_pcm.pg_db_name, password=global_pcm.pg_password)
+        self.assertTrue(logged_in)
+        table_name = 'test_table_view'
+        column_names = ('a', 'b')
+        with TestDbFiller(table_name, column_names, []):
+            response = c.get(self.path, follow=True)
+            self.assertEqual(response.status_code, 200)
+            self.assertCountEqual(response.redirect_chain, [(f'/app/table/{table_name}', 302)])
 
 
 class TestTableView(TestCase):
