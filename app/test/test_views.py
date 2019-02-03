@@ -132,3 +132,14 @@ class TestQueryView(TestCase):
         response = c.get('/app/query/?query=any', follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertCountEqual(response.redirect_chain, [('/app/login/?next=/app/query/%3Fquery%3Dany', 302)])
+
+
+class TestLogoutView(TestCase):
+    def test_next_page(self):
+        c = Client()
+        logged_in = c.login(username=global_pcm.pg_db_name, password=global_pcm.pg_password)
+        self.assertTrue(logged_in)
+        response = c.get('/app/logout', follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertCountEqual(response.redirect_chain,
+                              [('/app/logout/', 301), ('/app/', 302), ('/app/login/?next=/app/', 302)])
