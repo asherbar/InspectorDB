@@ -1,16 +1,9 @@
 {% extends 'common/base.html' %}
 {% block content %}
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col">
             <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    {% if current_table_name %}
-                    <a class="nav-link" href="{% url 'table_index' %}">Home</a>
-                    {% else %}
-                    <a class="nav-link active" href="#">Home</a>
-                    {% endif %}
-                </li>
                 {% if table_names %}
                 {% for table_name in table_names %}
                 <li class="nav-item">
@@ -40,13 +33,11 @@
 
     <div class="row">
 
-        <div class="col">
-            <div id="data_area">
-                {% block table_data %}
-                {% endblock %}
-            </div>
+        <div id="data_area" class="col w-50">
+            {% block table_data %}
+            {% endblock %}
         </div>
-        <div class="col">
+        <div class="col w-50">
             <div id="query_results_area"></div>
         </div>
     </div>

@@ -92,5 +92,4 @@ def _get_table_context(table, db):
         'records': table.get_all_records(),
         'table_names': db.get_public_tables(),
         'current_table_name': table.table_name,
-        'table_title': 'All',
     }
