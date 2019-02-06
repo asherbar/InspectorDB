@@ -1,3 +1,5 @@
+import math
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404
 from django.shortcuts import redirect
@@ -49,11 +51,22 @@ def get_table(request, table_name):
     try:
         table = Table(db_name, table_name)
     except TableDoesNotExist:
-        raise Http404("Table {} does't exist".format(table_name))
+        raise Http404(f"Table {table_name} does't exist")
     except DbConnectionError:
         return redirect(table_index.view_name)
     db = Db(db_name)
-    context = _get_table_context(table, db)
+    page = int(request.GET.get('page', 1))
+    current_records_page = table.get_records_by_page(page)
+    context = {
+        'column_names': table.get_columns(),
+        'records': current_records_page,
+        'table_names': db.get_public_tables(),
+        'current_table_name': table.table_name,
+        'total_number_of_rows': table.get_total_number_of_rows(),
+        'items_on_page': table.limit,
+        'current_page': page,
+        'number_of_pages': math.ceil(table.get_total_number_of_rows() / table.limit)
+    }
     return HttpResponse(template.render(context, request))
 
 
@@ -84,12 +97,3 @@ def execute_query(request):
 
 
 execute_query.view_name = 'query'
-
-
-def _get_table_context(table, db):
-    return {
-        'column_names': table.get_columns(),
-        'records': table.get_all_records(),
-        'table_names': db.get_public_tables(),
-        'current_table_name': table.table_name,
-    }

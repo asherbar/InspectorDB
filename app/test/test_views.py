@@ -62,6 +62,20 @@ class TestTableView(TestCase):
             response = c.get(f'/app/table/{table_name}')
             self.assertEqual(response.status_code, 200)
 
+    def test_get_table_page(self):
+        table_name = 'test_table_view'
+        column_names = ('a', 'b')
+        with TestDbFiller(table_name, column_names, list((str(i), str(i)) for i in range(100))):
+            c = Client()
+            logged_in = c.login(username=global_pcm.pg_db_name, password=global_pcm.pg_password)
+            self.assertTrue(logged_in)
+            response = c.get(f'/app/table/{table_name}?page=1')
+            self.assertEqual(response.status_code, 200)
+            response = c.get(f'/app/table/{table_name}?page=2')
+            self.assertEqual(response.status_code, 200)
+            response = c.get(f'/app/table/{table_name}?page=200')
+            self.assertEqual(response.status_code, 200)
+
     def test_get_non_existing_table(self):
         c = Client()
         logged_in = c.login(username=global_pcm.pg_db_name, password=global_pcm.pg_password)

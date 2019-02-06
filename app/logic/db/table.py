@@ -1,3 +1,5 @@
+import psycopg2.extras
+
 from app.logic.utils.db_connection import get_connection
 from app.logic.utils.logger_utils import get_logger
 from project.common.exception import InspectorDbException
@@ -29,14 +31,24 @@ class Table:
             cursor.execute('SELECT * FROM {} LIMIT 1'.format(self._table_name))
             return [desc[0] for desc in cursor.description]
 
-    def get_all_records(self):
-        with get_connection(self._db_name) as c:
-            cursor = c.cursor()
-            cursor.execute('SELECT * FROM {} LIMIT {}'.format(self._table_name, self._limit))
-            return cursor.fetchmany(self._limit)
-
     def _table_exists(self):
         with get_connection(self._db_name) as c:
             cursor = c.cursor()
             cursor.execute("SELECT * FROM information_schema.tables WHERE table_name=%s", (self._table_name.lower(),))
             return bool(cursor.rowcount)
+
+    def get_total_number_of_rows(self):
+        with get_connection(self._db_name) as c:
+            cursor = c.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            cursor.execute(f'SELECT COUNT (*) FROM {self._table_name}')
+            return cursor.fetchone()['count']
+
+    def get_records_by_page(self, page):
+        with get_connection(self._db_name) as c:
+            cursor = c.cursor()
+            cursor.execute(f'SELECT * FROM {self._table_name} LIMIT {self.limit} OFFSET {(page - 1) * self.limit}')
+            return cursor.fetchmany(self.limit)
+
+    @property
+    def limit(self):
+        return self._limit
