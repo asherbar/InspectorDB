@@ -1,25 +1,13 @@
 <div class="table-wrap">
-    <table class="table table-bordered" id="query_result">
-        <caption style="caption-side: top;">{{query_title}}</caption>
-        {% if query_error %}
-        <tr class="header">
-            <th scope="col">{{error_msg}}</th>
-        </tr>
-        {% else %}
-
+    <table class="table table-bordered">
         <thead class="thead-dark">
         <tr class="header">
-            {% if is_dml is False %}
             {% for column in column_names %}
             <th scope="col">{{column}}</th>
             {% endfor %}
-            {% endif %}
         </tr>
         </thead>
         <tbody>
-        {% if is_dml %}
-        <tr>Query affected {{records}} records</tr>
-        {% else %}
         {% for row in records %}
         <tr>
             {% for v in row %}
@@ -27,9 +15,6 @@
             {% endfor %}
         </tr>
         {% endfor %}
-        {% endif %}
         </tbody>
-        {% endif %}
-
     </table>
 </div>

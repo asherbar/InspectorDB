@@ -1,5 +1,5 @@
 $('#table_rows_area').pagination({
-    items: $('#paginate_table_rows').attr('items'),
+    pages: $('#paginate_table_rows').attr('pages'),
     itemOnPage: $('#paginate_table_rows').attr('items_on_page'),
     currentPage: $('#paginate_table_rows').attr('current_page'),
     cssStyle: 'page-item',

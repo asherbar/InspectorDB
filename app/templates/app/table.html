@@ -1,42 +1,7 @@
 {% extends 'app/data_base.html' %}
-{% load static %}
 {% load widget_tweaks %}
 {% block table_data %}
 {% include 'common/table-style.html' %}
-{% if column_names %}
-<div class="table-wrap">
-    <table class="table table-bordered">
-        <caption style="caption-side: top;">
-            <nav>
-                <ul class="pagination" id="table_rows_area">
-                </ul>
-            </nav>
-        </caption>
-        <thead class="thead-dark">
-        <tr class="header">
-            {% for column in column_names %}
-            <th scope="col">{{column}}</th>
-            {% endfor %}
-        </tr>
-        </thead>
-        <tbody>
-        {% for row in records %}
-        <tr>
-            {% for v in row %}
-            <td>{{v}}</td>
-            {% endfor %}
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
-{% endif %}
+{% include 'app/query.html' %}
 {% endblock %}
-{% block footer %}
-<script type="text/javascript" src="{% static 'js/jquery.simplePagination.min.js' %}"></script>
-<!--suppress HtmlUnknownAttribute -->
-<script type="text/javascript" src="{% static 'js/paginate_table_rows.js' %}" id="paginate_table_rows"
-        items="{{number_of_pages}}" current_page="{{current_page}}" items_on_page="{{items_on_page}}"
-        table_url="{{ request.path }}"></script>
 
-{% endblock %}

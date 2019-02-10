@@ -1,6 +1,7 @@
 {% extends 'common/base.html' %}
+{% load static %}
 {% block content %}
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <div class="col">
             <ul class="nav nav-tabs">
@@ -8,7 +9,7 @@
                 {% for table_name in table_names %}
                 <li class="nav-item">
                     {% if table_name == current_table_name %}
-                    <a class="nav-link active" href="#">{{table_name}}</a>
+                    <a class="nav-link active" id="current_table_name">{{table_name}}</a>
                     {% else %}
                     <a class="nav-link" href="{% url 'table' table_name %}">{{table_name}}</a>
                     {% endif %}
@@ -17,6 +18,10 @@
                 {% endif %}
             </ul>
         </div>
+
+    </div>
+
+    <div class="row">
         <div class="col">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -29,17 +34,37 @@
             </div>
         </div>
     </div>
-
-
     <div class="row">
-
-        <div id="data_area" class="col w-50">
-            {% block table_data %}
-            {% endblock %}
+        <div class="col">
+            <span class="text-muted" id="query_title">{{executed_query}}</span>
         </div>
-        <div class="col w-50">
-            <div id="query_results_area"></div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <nav>
+                <ul class="pagination" id="table_rows_area"></ul>
+            </nav>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+
+            <div id="data_area">
+                {% block table_data %}
+                {% endblock %}
+            </div>
+            <div>
+                <div id="query_results_area"></div>
+            </div>
         </div>
     </div>
 </div>
+{% endblock %}
+{% block footer %}
+<script type="text/javascript" src="{% static 'js/jquery.simplePagination.min.js' %}"></script>
+<!--suppress HtmlUnknownAttribute -->
+<script type="text/javascript" src="{% static 'js/paginate_table_rows.js' %}" id="paginate_table_rows"
+        pages="{{number_of_pages}}" current_page="{{current_page}}" items_on_page="{{items_on_page}}"
+        table_url="{{ request.path }}"></script>
+
 {% endblock %}

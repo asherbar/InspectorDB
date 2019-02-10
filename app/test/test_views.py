@@ -124,14 +124,14 @@ class TestQueryView(TestCase):
         self.assertTrue(logged_in)
         q = Query.from_('oops').select('a')
         response = c.get(f'/app/query/?query={q}')
-        self.assertContains(response, 'relation &quot;oops&quot; does not exist')
+        self.assertContains(response, r'relation \"oops\" does not exist')
 
     def test_query_syntax_error(self):
         c = Client()
         logged_in = c.login(username=global_pcm.pg_db_name, password=global_pcm.pg_password)
         self.assertTrue(logged_in)
         response = c.get(f'/app/query/?query=nonsense')
-        self.assertContains(response, 'syntax error at or near &quot;nonsense&quot')
+        self.assertContains(response, r'syntax error at or near \"nonsense\"')
 
     def test_query_update_table(self):
         c = Client()
