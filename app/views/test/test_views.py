@@ -1,3 +1,4 @@
+from unittest import mock
 from unittest.mock import patch
 
 from django.test import TestCase, Client
@@ -137,9 +138,18 @@ class TestQueryView(TestCase):
         c = Client()
         logged_in = c.login(username=global_pcm.pg_db_name, password=global_pcm.pg_password)
         self.assertTrue(logged_in)
+        with mock.patch.dict('os.environ', {'READONLY': '0'}):
+            q = Query.update(self.table_name).set(self.column_names[0], 'ccc')
+            response = c.get(f'/app/query/?query={q}')
+            self.assertEqual(response.status_code, 200)
+
+    def test_query_update_readonly_table(self):
+        c = Client()
+        logged_in = c.login(username=global_pcm.pg_db_name, password=global_pcm.pg_password)
+        self.assertTrue(logged_in)
         q = Query.update(self.table_name).set(self.column_names[0], 'ccc')
         response = c.get(f'/app/query/?query={q}')
-        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, r'cannot execute UPDATE in a read-only transaction')
 
     def test_execute_query_not_authenticated(self):
         c = Client()

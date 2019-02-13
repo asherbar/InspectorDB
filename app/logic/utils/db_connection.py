@@ -1,9 +1,13 @@
+import os
+
 import psycopg2
 import psycopg2.pool
 
 from app.logic.utils.logger_utils import get_logger
 from app.logic.utils.postgresql_env import InspectorDbAppEnv
 from project.common.exception import InspectorDbException
+
+READONLY_DEFAULT = '1'
 
 logger = get_logger(__name__)
 
@@ -58,5 +62,12 @@ def get_connection(db_name):
     if _connection_pools is None:
         _connection_pools = _create_connection_pools()
     connection = _connection_pools[db_name].getconn()
-
+    try:
+        is_readonly_connection = int(os.environ.get('READONLY', READONLY_DEFAULT))
+    except ValueError as e:
+        logger.info(
+            'Error trying to get the READONLY environment variable. Error was: %s. Using default value "%s" instead',
+            e, READONLY_DEFAULT)
+        is_readonly_connection = int(READONLY_DEFAULT)
+    connection.readonly = bool(is_readonly_connection)
     return _PooledConnection(connection, db_name)
