@@ -1,5 +1,7 @@
 # Inspector-D.B.
-A database inspector application, focused on applications in the cloud, specifically Cloud Foundry
+A database inspector application, focused on applications in the cloud, specifically Cloud Foundry  
+![build](https://travis-ci.org/asherbar/InspectorDB.svg?branch=master)
+[![codecov](https://codecov.io/gh/asherbar/InspectorDB/branch/master/graph/badge.svg)](https://codecov.io/gh/asherbar/InspectorDB)[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ebad02177e8b423f82dde15521bf9c7e)](https://www.codacy.com/app/asherbar/Inspector-D.B.?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=asherbar/Inspector-D.B.&amp;utm_campaign=Badge_Grade)
 # Run in Cloud Foundry
 1. Clone this repository
 1. Create a manifest (see next section for more on how this manifest should look) and put it in the root directory of this repository.
