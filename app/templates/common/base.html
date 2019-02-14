@@ -2,7 +2,7 @@
 {% load static %}
 <html lang="en">
 <head>
-    {% include 'common/bootstrap.html' %}
+    {% include 'common/bootstrap-css.html' %}
     <title>{% block title %}Inspector D.B.{% endblock %}</title>
 </head>
 
@@ -18,7 +18,7 @@
 </body>
 
 <footer>
-    {% include 'common/jquery.html' %}
+    {% include 'common/bootstrap-js.html' %}
     <script type="text/javascript" src="{% static 'js/update_query_results_area.js' %}" query_url="{% url 'query' %}"
             id="update_query_results_area"></script>
     <nav class="navbar fixed-bottom navbar-light bg-faded flex-fill justify-content-center">
