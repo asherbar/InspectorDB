@@ -23,7 +23,7 @@ class Query:
             try:
                 self._cursor.execute(self._query_str)
             except (psycopg2.ProgrammingError, psycopg2.InternalError) as e:
-                logger.error('Error while trying to execute query "%s"', self._query_str, e)
+                logger.exception('Error while trying to execute query "%s"', self._query_str)
                 raise QueryExecutionError(self._query_str, e) from e
             if self.is_dml:
                 c.commit()
