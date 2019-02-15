@@ -3,8 +3,8 @@ $("#table_rows_area").pagination({
     itemOnPage: $("#paginate_table_rows").attr("items_on_page"),
     currentPage: $("#paginate_table_rows").attr("current_page"),
     cssStyle: "page-item",
-    prevText: "<span aria-hidden="true" class="page-item">&laquo;</span>",
-    nextText: "<span aria-hidden="true">&raquo;</span>",
+    prevText: "<span aria-hidden=\"true\" class=\"page-item\">&laquo;</span>",
+    nextText: "<span aria-hidden=\"true\">&raquo;</span>",
     onInit() {
         // fire first page loading
     },

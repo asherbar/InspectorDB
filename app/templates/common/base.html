@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     {% include 'common/bootstrap-css.html' %}
+    {% block head %}{% endblock %}
     <title>{% block title %}Inspector D.B.{% endblock %}</title>
 </head>
 
@@ -19,10 +20,13 @@
 
 <footer>
     {% include 'common/bootstrap-js.html' %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="{% static 'js/update_query_results_area.js' %}" query_url="{% url 'query' %}"
             id="update_query_results_area"></script>
     <nav class="navbar fixed-bottom navbar-light bg-faded flex-fill justify-content-center">
-        <img src="{% static 'assets/GitHub-Mark-32px.png' %}" width="30" height="30" alt="">
+        <a href="https://github.com/asherbar/InspectorDB/">
+            <img src="{% static 'assets/GitHub-Mark-32px.png' %}" width="30" height="30" alt="Source code">
+        </a>
     </nav>
     {% block footer %}
     {% endblock %}

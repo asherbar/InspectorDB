@@ -22,7 +22,7 @@ applications:
   -   https://github.com/cloudfoundry/python-buildpack#v1.6.25
   ```
 Where:
-- `<YOUR POSTGRES SERVICE INSTANCE NAME>` is the name of the Postgres instance you want to inspect (optional. You can also [bind](https://docs.cloudfoundry.org/devguide/services/managing-services.html#bind) it to the app later.
-- `<YOUR SECRET KEY>` is your secret key. This is [required](https://docs.djangoproject.com/en/2.1/ref/settings/#secret-key) and its value shouldn't be shared. You can generate your own [here](https://www.miniwebtool.com/django-secret-key-generator/).
+-   `<YOUR POSTGRES SERVICE INSTANCE NAME>` is the name of the Postgres instance you want to inspect (optional. You can also [bind](https://docs.cloudfoundry.org/devguide/services/managing-services.html#bind) it to the app later.
+-   `<YOUR SECRET KEY>` is your secret key. This is [required](https://docs.djangoproject.com/en/2.1/ref/settings/#secret-key) and its value shouldn't be shared. You can generate your own [here](https://www.miniwebtool.com/django-secret-key-generator/).
 ## Options
 -   READONLY- when set to 0 (which is read as _false_) allows the user to execute write commands (such as UPDATE, DROP TABLE etc.). If not set the default is 1 which is read as _true_ which limits the user to execute read-only commands (such as SELECT).
