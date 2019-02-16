@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-from project.options import Options
+from project.options.option import OptionDebug, OptionSessionCookieAge
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['SECRET_KEY']
 
-DEBUG = Options.get_debug()
+DEBUG = OptionDebug().get_option()
 
 ALLOWED_HOSTS = ['*']
 
@@ -129,7 +129,7 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
     X_FRAME_OPTIONS = 'DENY'
     SECURE_HSTS_PRELOAD = True
-    SESSION_COOKIE_AGE = Options.get_session_cookie_age()
+    SESSION_COOKIE_AGE = OptionSessionCookieAge().get_option()
     SESSION_SAVE_EVERY_REQUEST = True
 LOGIN_URL = '/app/login/'
 

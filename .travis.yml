@@ -2,8 +2,6 @@ language: python
 dist: xenial
 env:
 - CODECOV_TOKEN="e2b3d614-88cf-46bc-ab77-188545603fa0"
-services:
-- docker
 python:
 - "3.6"
 - "3.7"

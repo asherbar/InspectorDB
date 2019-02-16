@@ -4,7 +4,7 @@ import psycopg2.pool
 from app.logic.utils.logger_utils import get_logger
 from app.logic.utils.postgresql_env import InspectorDbAppEnv
 from project.common.exception import InspectorDbException
-from project.options import Options
+from project.options.option import OptionReadOnly
 
 logger = get_logger(__name__)
 
@@ -59,5 +59,5 @@ def get_connection(db_name):
     if _connection_pools is None:
         _connection_pools = _create_connection_pools()
     connection = _connection_pools[db_name].getconn()
-    connection.readonly = Options.get_readonly()
+    connection.readonly = OptionReadOnly().get_option()
     return _PooledConnection(connection, db_name)

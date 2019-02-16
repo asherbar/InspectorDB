@@ -28,3 +28,4 @@ Where:
 Set the following environment variables to use the possible options:
 -   **READONLY**- when set to 0 (which is read as _false_) allows the user to execute write commands (such as UPDATE, DROP TABLE etc.). If not set the default is 1 which is read as _true_ which limits the user to execute read-only commands (such as SELECT).
 -   **SESSION_COOKIE_AGE**- the number of inactivity minutes before the user is automatically logged out. Default is 1209600 (two weeks).
+-   **VCAP_SERVICE_LABEL**- the label of the postgres service. Default is _postgresql_.

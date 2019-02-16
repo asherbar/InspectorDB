@@ -3,6 +3,8 @@ import os
 
 from cfenv import AppEnv, Service
 
+from project.options.option import OptionVcapServiceLabel
+
 
 def refresh_env(func):
     def wrapper(self, *args, **kwargs):
@@ -23,7 +25,7 @@ class InspectorDbAppEnv:
 
     @refresh_env
     def get_bound_db_names(self):
-        return [s.credentials['dbname'] for s in self._named_services.get('postgresql', []) if
+        return [s.credentials['dbname'] for s in self._named_services.get(OptionVcapServiceLabel().get_option(), []) if
                 'dbname' in s.credentials]
 
     @refresh_env
