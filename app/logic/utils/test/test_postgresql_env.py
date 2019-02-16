@@ -1,7 +1,7 @@
 import unittest
 
 from app.logic.utils.postgresql_env import InspectorDbAppEnv
-from project.test.postgres_container_utils import global_pcm, PostgresContainerManager
+from project.test_utils.postgres_container_utils import global_pcm, PostgresContainerManager
 
 
 class TestInspectorDbAppEnv(unittest.TestCase):

@@ -2,8 +2,8 @@ import unittest
 from unittest import mock
 
 from app.logic.db.query import Query, QueryExecutionError
-from project.test.postgres_container_utils import global_pcm
-from project.test.test_db_utils import TestDbFiller
+from project.test_utils.postgres_container_utils import global_pcm
+from project.test_utils.test_db_utils import TestDbFiller
 
 
 class TestQuery(unittest.TestCase):

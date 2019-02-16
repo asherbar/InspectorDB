@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from project.options import Options
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -21,15 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ['SECRET_KEY']
 
-# SECURITY WARNING: don't run with debug turned on in production!
-environ_debug_val = os.environ.get('DEBUG', False)
-try:
-    environ_debug_val = int(environ_debug_val)
-except ValueError:
-    # Unable to convert to an integer
-    pass
-
-DEBUG = bool(environ_debug_val)
+DEBUG = Options.get_debug()
 
 ALLOWED_HOSTS = ['*']
 
@@ -135,7 +129,8 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
     X_FRAME_OPTIONS = 'DENY'
     SECURE_HSTS_PRELOAD = True
-
+    SESSION_COOKIE_AGE = Options.get_session_cookie_age()
+    SESSION_SAVE_EVERY_REQUEST = True
 LOGIN_URL = '/app/login/'
 
 AUTHENTICATION_BACKENDS = ['app.logic.authentication.auth_backend.DbAuthentication']

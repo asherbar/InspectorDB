@@ -1,8 +1,8 @@
 import unittest
 
 from app.logic.db.table import Table, TableDoesNotExist
-from project.test.postgres_container_utils import global_pcm
-from project.test.test_db_utils import TestDbFiller
+from project.test_utils.postgres_container_utils import global_pcm
+from project.test_utils.test_db_utils import TestDbFiller
 
 
 class TestTable(unittest.TestCase):

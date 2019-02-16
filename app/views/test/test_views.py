@@ -6,8 +6,8 @@ from pypika import Query
 
 from app.logic.db.db import Db
 from app.logic.utils.db_connection import DbConnectionError
-from project.test.postgres_container_utils import global_pcm
-from project.test.test_db_utils import TestDbFiller
+from project.test_utils.postgres_container_utils import global_pcm
+from project.test_utils.test_db_utils import TestDbFiller
 
 
 class TestIndexView(TestCase):

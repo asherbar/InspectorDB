@@ -1,7 +1,7 @@
 import django.test as django_test
 
 from app.logic.authentication.auth_backend import DbAuthentication
-from project.test.postgres_container_utils import PostgresContainerManager, global_pcm
+from project.test_utils.postgres_container_utils import PostgresContainerManager, global_pcm
 
 
 class TestDbAuthentication(django_test.TestCase):

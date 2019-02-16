@@ -2,7 +2,7 @@ import unittest
 from unittest import mock
 
 from app.logic.utils.db_connection import get_connection
-from project.test.postgres_container_utils import global_pcm
+from project.test_utils.postgres_container_utils import global_pcm
 
 
 class TestDbConnection(unittest.TestCase):

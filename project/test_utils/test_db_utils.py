@@ -2,7 +2,7 @@ import psycopg2
 from pypika import Table, Query
 
 from app.logic.utils.logger_utils import get_logger
-from project.test.postgres_container_utils import global_pcm
+from project.test_utils.postgres_container_utils import global_pcm
 
 logger = get_logger(__name__)
 

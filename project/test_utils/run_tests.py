@@ -12,12 +12,12 @@ except ImportError:
     # Add project root to path:
     sys.path.append(project_root)
     import manage
-import project.test.postgres_container_utils as pcu
-from project.test.postgres_container_utils import PostgresContainerManager
+import project.test_utils.postgres_container_utils as pcu
+from project.test_utils.postgres_container_utils import PostgresContainerManager
 
 
 def main():
-    os.environ['DJANGO_SETTINGS_MODULE'] = 'project.test.settings'
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'project.test_utils.settings'
     sys.argv = [sys.argv[0], 'test'] + sys.argv[1:]
     # Go up two directories to project root:
     os.chdir(project_root)
