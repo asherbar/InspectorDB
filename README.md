@@ -2,6 +2,10 @@
 A cloud ready SQL client  
 ![build](https://travis-ci.org/asherbar/InspectorDB.svg?branch=master)
 [![codecov](https://codecov.io/gh/asherbar/InspectorDB/branch/master/graph/badge.svg)](https://codecov.io/gh/asherbar/InspectorDB)[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ebad02177e8b423f82dde15521bf9c7e)](https://www.codacy.com/app/asherbar/Inspector-D.B.?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=asherbar/Inspector-D.B.&amp;utm_campaign=Badge_Grade)
+## Introduction
+Inspector-D.B. is an SQL client, built as a web application, that aims to give access to cloud based SQL instances. The main use cases are debugging and as an admin-tool.
+## Supported DBMS's
+-   PostgreSQL
 ## Quick Run in Cloud Foundry
 This option assumes you have [Cloud Foundry CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) installed on your machine:
 1.  Clone this repository to your machine
