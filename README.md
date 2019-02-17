@@ -1,5 +1,5 @@
 # Inspector-D.B.
-A database inspector web-application, focused on inspecting databases in the cloud, specifically Cloud Foundry  
+A cloud ready SQL client  
 ![build](https://travis-ci.org/asherbar/InspectorDB.svg?branch=master)
 [![codecov](https://codecov.io/gh/asherbar/InspectorDB/branch/master/graph/badge.svg)](https://codecov.io/gh/asherbar/InspectorDB)[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ebad02177e8b423f82dde15521bf9c7e)](https://www.codacy.com/app/asherbar/Inspector-D.B.?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=asherbar/Inspector-D.B.&amp;utm_campaign=Badge_Grade)
 ## Quick Run in Cloud Foundry
