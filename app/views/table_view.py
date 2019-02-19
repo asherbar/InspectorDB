@@ -50,7 +50,7 @@ class TableView:
     def as_view(cls):
         @login_required
         def view(request, table_name):
-            index_view = TableView(request.user.username, table_name, request.GET.get('page'))
-            return index_view.dispatch(request)
+            table_view = TableView(request.user.username, table_name, request.GET.get('page'))
+            return table_view.dispatch(request)
 
         return view

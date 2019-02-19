@@ -18,7 +18,7 @@ class TestIndexView(TestCase):
         logged_in = c.login(username=global_pcm.pg_db_name, password=global_pcm.pg_password)
         self.assertTrue(logged_in)
         response = c.get(self.path)
-        self.assertContains(response, 'No tables found to inspect in DB')
+        self.assertContains(response, 'No tables in database... yet!')
 
     def test_not_authenticated(self):
         c = Client()

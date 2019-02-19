@@ -1,0 +1,11 @@
+{% extends 'app/data_base.html' %}
+{% block table_data %}
+<div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">No tables in database... yet!</h4>
+    <p>How about creating one right now. Try executing:</p>
+    <div class="alert alert-dark" role="alert">
+        <p class="mb-0">CREATE TABLE Persons (PersonID int,LastName varchar(255),FirstName varchar(255))</p>
+    </div>
+
+</div>
+{% endblock %}

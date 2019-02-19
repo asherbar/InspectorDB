@@ -10,7 +10,11 @@
 
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
+        {% if table_names %}
         <div class="sidebar-heading">Tables</div>
+        {% else %}
+        <div class="sidebar-heading">No tables</div>
+        {% endif %}
         <div class="list-group list-group-flush">
             {% if table_names %}
             {% for tn in table_names %}

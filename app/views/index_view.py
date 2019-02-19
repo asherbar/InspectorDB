@@ -29,11 +29,7 @@ class IndexView:
         if default_table_name is not None:
             return redirect(TableView.view_name, table_name=default_table_name)
         else:
-            context = {
-                'no_tables': True,
-                'db_name': self.db_name
-            }
-            return render(request, self.template_path, context)
+            return render(request, 'app/no_tables.html')
 
     @classmethod
     def as_view(cls):
