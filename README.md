@@ -16,13 +16,30 @@ This option assumes you have [Cloud Foundry CLI](https://docs.cloudfoundry.org/c
 1.  Run `cf push`  
 
 This will upload this app to the [targeted CF space](http://cli.cloudfoundry.org/en-US/cf/target.html), assign a [route](https://docs.cloudfoundry.org/devguide/deploy-apps/routes-domains.html#routes), and run it. After the operation succeeds, the application will be available at the given route.
+## Run Locally With DB Credentials
+This option assumes you have a database instance running (at least one) that can be connected to by using the credentials given via [DB_CREDENTIALS](#db_creds_options). In the following example we'll assume the DB has the following credentials:
+-   "username": "myuser"
+-   "password": "mypass"
+-   "hostname": "myhostname"
+-   "port": 1234
+-   "dbname": "mydbname"
+
+Step by step (from the root of this repository):
+1.  Execute: `export DB_CREDENTIALS='[{"username": "myuser", "password": "mypass","hostname": "myhostname","port": 1234,"dbname": "mydbname"}]'`
+1.  Execute: `export SECRET_KEY='shh'`  
+    Note: It's always better to [generate](https://www.miniwebtool.com/django-secret-key-generator/) a real secret key and use it instead.
+1.  Execute: `export DEBUG=1`  
+    Warning: Do not run in production with `DEBUG=1`!
+1.  Execute: `python manage.py runserver`
+
+This will run Inspector D.B. locally and will make it available via http://localhost:8000/, or something similar.
 
 ## Options
 Set the following environment variables to use the possible options:
 -   **READONLY**- when set to 0 (which is read as _false_) allows the user to execute write commands (such as UPDATE, DROP TABLE etc.). If not set the default is 1 which is read as _true_ which limits the user to execute read-only commands (such as SELECT).
 -   **SESSION_COOKIE_AGE**- the number of inactivity minutes before the user is automatically logged out. Default is 1209600 (two weeks).
 -   **VCAP_SERVICE_LABEL**- the label of the postgres service. Default is _postgresql_.
--   **DB_CREDENTIALS**- if given, then assumed to be a string that's a valid JSON list, where each object in the list contains a full set of database credentials, which are:
+-   <a name="db_creds_options"></a>**DB_CREDENTIALS**- if given, then assumed to be a string that's a valid JSON list, where each object in the list contains a full set of database credentials, which are:
     -   username
     -   password
     -   hostname
