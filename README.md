@@ -22,3 +22,23 @@ Set the following environment variables to use the possible options:
 -   **READONLY**- when set to 0 (which is read as _false_) allows the user to execute write commands (such as UPDATE, DROP TABLE etc.). If not set the default is 1 which is read as _true_ which limits the user to execute read-only commands (such as SELECT).
 -   **SESSION_COOKIE_AGE**- the number of inactivity minutes before the user is automatically logged out. Default is 1209600 (two weeks).
 -   **VCAP_SERVICE_LABEL**- the label of the postgres service. Default is _postgresql_.
+-   **DB_CREDENTIALS**- if given, then assumed to be a string that's a valid JSON list, where each object in the list contains a full set of database credentials, which are:
+    -   username
+    -   password
+    -   hostname
+    -   port
+    -   dbname  
+    
+    For example:  
+    ```json
+    [
+      {
+        "username": "myuser", 
+        "password": "mypass",
+        "hostname": "myhostname",
+        "port": 1234,
+        "dbname": "mydbname"
+      }
+    ]
+    ```
+    When this option is given, other credentials that might be given via VCAP_SERVICES (if used in CF), are ignored

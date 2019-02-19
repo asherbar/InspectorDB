@@ -52,3 +52,10 @@ class OptionReadOnly(Option):
 class OptionVcapServiceLabel(Option):
     def __init__(self):
         super().__init__('VCAP_SERVICE_LABEL', 'postgresql', str)
+
+
+class OptionDbCredentials(Option):
+    ENV_KEY = 'DB_CREDENTIALS'
+
+    def __init__(self):
+        super().__init__(self.ENV_KEY, '', str)
