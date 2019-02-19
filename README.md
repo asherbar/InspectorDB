@@ -32,7 +32,7 @@ Step by step (from the root of this repository):
     Warning: Do not run in production with `DEBUG=1`!
 1.  Execute: `python manage.py runserver`
 
-This will run Inspector D.B. locally and will make it available via http://localhost:8000/, or something similar.
+This will run Inspector D.B. locally and will make it available via <http://localhost:8000/>, or something similar.
 
 ## Options
 Set the following environment variables to use the possible options:
