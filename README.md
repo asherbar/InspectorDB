@@ -59,4 +59,17 @@ Set the following environment variables to use the possible options:
     ]
     ```
     When this option is given, other credentials that might be given via VCAP_SERVICES (if used in CF), are ignored
--   **QUERY_ROWS_LIMIT**- the number of rows to be retrieved when executing a query. Default is 50 rows. 
+-   **QUERY_ROWS_LIMIT**- the number of rows to be retrieved when executing a query. Default is 50 rows.
+
+## Run Tests
+### Test environment
+In order to test code as realistically as possible, all tests are run against a [docker based PostgreSQL](https://hub.docker.com/_/postgres) instance. Before the tests run, the image is downloaded if it doesn't already exist. While the docker will be erased after the tests complete, the image will not in order to make future runs faster. The image can be erased manually with [Docker's CLI](https://docs.docker.com/engine/reference/commandline/cli/).
+### Test execution
+Execute the following to run all tests (assuming the current directory is the project's root):
+```bash
+./project/test_utils/run_tests.py
+```
+The [run_tests](/project/test_utils/run_tests.py) script extends Django's [running tests mechanism](https://docs.djangoproject.com/en/2.1/topics/testing/overview/#running-tests), so any option that Django supports, is supported by the `run_tests.py` script. E.g., the following will run only the tests under the `app.logic.utils` package, and with a verbosity level of 2:
+```bash
+./project/test_utils/run_tests.py app.logic.utils -v 2
+``` 
