@@ -59,3 +59,4 @@ Set the following environment variables to use the possible options:
     ]
     ```
     When this option is given, other credentials that might be given via VCAP_SERVICES (if used in CF), are ignored
+-   **QUERY_ROWS_LIMIT**- the number of rows to be retrieved when executing a query. Default is 50 rows. 

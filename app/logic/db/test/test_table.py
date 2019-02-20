@@ -1,4 +1,5 @@
 import unittest
+from unittest import mock
 
 from app.logic.db.table import Table, TableDoesNotExist
 from project.test_utils.postgres_container_utils import global_pcm
@@ -26,15 +27,17 @@ class TestTable(unittest.TestCase):
         self.assertEqual(object_under_test.table_name, self.table_name)
 
     def test_table_limit(self):
-        object_under_test = Table(global_pcm.pg_db_name, self.table_name, 1)
-        self.assertCountEqual(object_under_test.get_records_by_page(1), self.data[:1])
-        self.assertCountEqual(object_under_test.get_columns(), self.column_names)
+        with mock.patch.dict('os.environ', {'QUERY_ROWS_LIMIT': '1'}):
+            object_under_test = Table(global_pcm.pg_db_name, self.table_name)
+            self.assertCountEqual(object_under_test.get_records_by_page(1), self.data[:1])
+            self.assertCountEqual(object_under_test.get_columns(), self.column_names)
 
     def test_table_pagination(self):
-        object_under_test = Table(global_pcm.pg_db_name, self.table_name, 1)
-        self.assertCountEqual(object_under_test.get_records_by_page(2), self.data[1:])
-        self.assertCountEqual(object_under_test.get_columns(), self.column_names)
-        self.assertCountEqual(object_under_test.get_records_by_page(len(self.data) + 1), [])
+        with mock.patch.dict('os.environ', {'QUERY_ROWS_LIMIT': '1'}):
+            object_under_test = Table(global_pcm.pg_db_name, self.table_name)
+            self.assertCountEqual(object_under_test.get_records_by_page(2), self.data[1:])
+            self.assertCountEqual(object_under_test.get_columns(), self.column_names)
+            self.assertCountEqual(object_under_test.get_records_by_page(len(self.data) + 1), [])
 
     def test_table_doesnt_exist(self):
         self.assertRaises(TableDoesNotExist, Table, global_pcm.pg_db_name, self.table_name + 'oops')

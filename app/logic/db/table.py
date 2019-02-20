@@ -3,6 +3,7 @@ import psycopg2.extras
 from app.logic.utils.db_connection import get_connection
 from app.logic.utils.logger_utils import get_logger
 from project.common.exception import InspectorDbException
+from project.options.option import OptionQueryRowsLimit
 
 logger = get_logger(__name__)
 
@@ -13,10 +14,10 @@ class TableDoesNotExist(InspectorDbException):
 
 
 class Table:
-    def __init__(self, db_name, table_name, limit=50):
+    def __init__(self, db_name, table_name):
         self._db_name = db_name
         self._table_name = table_name
-        self._limit = limit
+        self._limit = OptionQueryRowsLimit().get_option()
         if not self._table_exists():
             logger.info('Table %s not found', table_name)
             raise TableDoesNotExist(table_name)

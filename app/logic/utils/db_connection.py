@@ -26,9 +26,6 @@ def _create_connection_pools():
                                                                               host=db_credentials.hostname,
                                                                               port=db_credentials.port,
                                                                               database=db_credentials.dbname)
-        except KeyError as e:
-            logger.error('Unable to initialize DB with name %s. Missing "%s" key from credentials. Got: %s', bound_db,
-                         e.args[0], db_credentials)
         except psycopg2.OperationalError as e:
             logger.exception('Error while trying to connect to DB with credentials %s', db_credentials)
             raise DbConnectionError(db_credentials) from e

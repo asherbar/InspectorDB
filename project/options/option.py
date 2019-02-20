@@ -59,3 +59,10 @@ class OptionDbCredentials(Option):
 
     def __init__(self):
         super().__init__(self.ENV_KEY, '', str)
+
+
+class OptionQueryRowsLimit(Option):
+    ENV_KEY = 'QUERY_ROWS_LIMIT'
+
+    def __init__(self):
+        super().__init__(self.ENV_KEY, 50, int)
