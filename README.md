@@ -6,16 +6,45 @@ A cloud ready SQL client
 Inspector-D.B. is an SQL client, built as a web application, that aims to give access to cloud based SQL instances. The main use cases are debugging and as an admin-tool.
 ## Supported DBMS's
 -   PostgreSQL
-## Quick Run in Cloud Foundry
-This option assumes you have [Cloud Foundry CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html) installed on your machine:
-1.  Clone this repository to your machine
+## Run in Cloud Foundry
+### Prerequisites
+-   Python >= 3.6
+-   [Cloud Foundry CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html)
+### Step-by-step
+1.  Clone this repository to your machine: `git clone https://github.com/asherbar/InspectorDB.git`
+1.  Change the directory to the project's root: `cd InspectorDB`
 1.  Copy and rename the manifest template - [manifest-template.yml](manifest-template.yml), to `manifest.yml`.
 1.  In the newly created `manifest.yml`, replace the following placeholders:
     1. `<YOUR SECRET KEY>`- this could be any string, but it's best not to use a trivial one (e.g., an empty string). The value is used by the [Django framework](https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-SECRET_KEY). You can generate your own [here](https://www.miniwebtool.com/django-secret-key-generator/).
-    1.  `<YOUR POSTGRES SERVICE INSTANCE NAME>`- (optional) the name of the Postgres service instance which is the target of the inspection. You may not specify any service instance (in which case the application will have nothing to inspect), or specify more than one instances (in which case the application will let you choose which instance to inspect during runtime). 
+    1.  `<YOUR POSTGRES SERVICE INSTANCE NAME>`- (optional) the name of the Postgres service instance which is the target of the inspection. You may not specify any service instance (in which case the application will have nothing to inspect), or specify more than one instances (in which case the application will let you choose which instance to inspect during runtime).  
+    For example, if the database's instance needing inspection is named `myappspostgres`, `manifest.yml` should look like this (the secret key should be different, of course):
+    ```yaml
+    ---
+    applications:
+    - name: inspector-db
+      command: python manage.py collectstatic --noinput && gunicorn project.wsgi:application
+      services:
+      - myappspostgres
+      env:
+        SECRET_KEY: '(2x@zp+!%=qg*ut$rm$ijij@)%miaw_934_+wlb!5g&5lc*)bd'
+      buildpacks:
+      - https://github.com/cloudfoundry/python-buildpack#v1.6.25
+    ```
+    It's possible to leave out the whole `services` section and [bind](https://cli.cloudfoundry.org/en-US/cf/bind-service.html) the inspector D.B. to a databse instance after the app has been deployed. In that case `manifest.yml` would look as following:
+    ```yaml
+    ---
+    applications:
+    - name: inspector-db
+      command: python manage.py collectstatic --noinput && gunicorn project.wsgi:application
+      env:
+        SECRET_KEY: '(2x@zp+!%=qg*ut$rm$ijij@)%miaw_934_+wlb!5g&5lc*)bd'
+      buildpacks:
+      - https://github.com/cloudfoundry/python-buildpack#v1.6.25
+    ```
+    Any required [option](#options) needs to be set in the `env` section, or by using the [set-env](https://cli.cloudfoundry.org/en-US/cf/set-env.html), after the app has been deployed.
 1.  Run `cf push`  
 
-This will upload this app to the [targeted CF space](http://cli.cloudfoundry.org/en-US/cf/target.html), assign a [route](https://docs.cloudfoundry.org/devguide/deploy-apps/routes-domains.html#routes), and run it. After the operation succeeds, the application will be available at the given route.
+This will upload this app to the [targeted CF space](http://cli.cloudfoundry.org/en-US/cf/target.html), assign a [route](https://docs.cloudfoundry.org/devguide/deploy-apps/routes-domains.html#routes), and run it. After the operation succeeds, the application will be available at the given route. See the [usage](#app-usage) section for how to use the app once its been deployed.
 ## Run Locally With DB Credentials
 This option assumes you have a database instance running (at least one) that can be connected to by using the credentials given via [DB_CREDENTIALS](#db_creds_options). In the following example we'll assume the DB has the following credentials:
 -   "username": "myuser"
@@ -72,4 +101,15 @@ Execute the following to run all tests (assuming the current directory is the pr
 The [run_tests](/project/test_utils/run_tests.py) script extends Django's [running tests mechanism](https://docs.djangoproject.com/en/2.1/topics/testing/overview/#running-tests), so any option that Django supports, is supported by the `run_tests.py` script. E.g., the following will run only the tests under the `app.logic.utils` package, and with a verbosity level of 2:
 ```bash
 ./project/test_utils/run_tests.py app.logic.utils -v 2
-``` 
+```
+
+## App Usage
+_Note_: There must be a database instance running that matches the credentials given to the application.  
+
+After the app is running (either locally or in the cloud), visit the app's root URL in your browser. You should get a window similar to this:
+![login page](readme_assets/login.png?raw=true "Login")
+The drop-down selector will contain all the database names from the credentials the app was given (either with [DB_CREDENTIALS](#db_creds_options), or via CF). In this case there's only one such database named _postgres_.  
+In order to see the database the database's password needs to be given.  
+After given the password and clicking _login_ a window similar to the following will show:
+![tables page](readme_assets/tables.png?raw=true "Table")
+Here you may explore the data of different tables, or execute queries to view and change existing records. 
