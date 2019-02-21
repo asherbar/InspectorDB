@@ -10,9 +10,13 @@ Inspector-D.B. is an SQL client, built as a web application, that aims to give a
 ### Prerequisites
 -   Python >= 3.6
 -   [Cloud Foundry CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html)
+
 ### Step-by-step
-1.  Clone this repository to your machine: `git clone https://github.com/asherbar/InspectorDB.git`
-1.  Change the directory to the project's root: `cd InspectorDB`
+
+1.  Clone this repository to your machine:  
+    `git clone https://github.com/asherbar/InspectorDB.git`
+1.  Change the directory to the project's root:  
+    `cd InspectorDB`
 1.  Copy and rename the manifest template - [manifest-template.yml](manifest-template.yml), to `manifest.yml`.
 1.  In the newly created `manifest.yml`, replace the following placeholders:
     1. `<YOUR SECRET KEY>`- this could be any string, but it's best not to use a trivial one (e.g., an empty string). The value is used by the [Django framework](https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-SECRET_KEY). You can generate your own [here](https://www.miniwebtool.com/django-secret-key-generator/).
@@ -42,6 +46,7 @@ Inspector-D.B. is an SQL client, built as a web application, that aims to give a
       - https://github.com/cloudfoundry/python-buildpack#v1.6.25
     ```
     Any required [option](#options) needs to be set in the `env` section, or by using the [set-env](https://cli.cloudfoundry.org/en-US/cf/set-env.html), after the app has been deployed.
+    
 1.  Run `cf push`  
 
 This will upload this app to the [targeted CF space](http://cli.cloudfoundry.org/en-US/cf/target.html), assign a [route](https://docs.cloudfoundry.org/devguide/deploy-apps/routes-domains.html#routes), and run it. After the operation succeeds, the application will be available at the given route. See the [usage](#app-usage) section for how to use the app once its been deployed.
