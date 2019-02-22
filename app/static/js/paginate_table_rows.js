@@ -8,7 +8,7 @@ $("#table_rows_area").pagination({
     onInit() {
         // fire first page loading
     },
-    onPageClick: function (page, evt) {
+    onPageClick(page, evt) {
         window.location.href = $("#paginate_table_rows").attr("table_url") + "?page=" + page;
     }
 });

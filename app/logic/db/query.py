@@ -3,6 +3,7 @@ import psycopg2
 from app.logic.utils.db_connection import get_connection
 from app.logic.utils.logger_utils import get_logger
 from project.common.exception import InspectorDbException
+from project.options.option import OptionQueryRowsLimit
 
 logger = get_logger(__name__)
 
@@ -13,9 +14,9 @@ class QueryExecutionError(InspectorDbException):
 
 
 class Query:
-    def __init__(self, db_name, query_str, limit=50):
+    def __init__(self, db_name, query_str):
         self._db_name = db_name
-        self._limit = limit
+        self._limit = OptionQueryRowsLimit().get_option()
         self._query_str = query_str
         self._rows_affected = None
         with get_connection(self._db_name) as c:

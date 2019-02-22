@@ -26,9 +26,10 @@ class TestQuery(unittest.TestCase):
         self.assertCountEqual(object_under_test.get_query_result(), self.data)
 
     def test_query_with_limit(self):
-        object_under_test = Query(global_pcm.pg_db_name, f'SELECT * FROM {self.table_name}', 1)
-        self.assertCountEqual(object_under_test.get_column_names(), self.column_names)
-        self.assertCountEqual(object_under_test.get_query_result(), self.data[:1])
+        with mock.patch.dict('os.environ', {'QUERY_ROWS_LIMIT': '1'}):
+            object_under_test = Query(global_pcm.pg_db_name, f'SELECT * FROM {self.table_name}')
+            self.assertCountEqual(object_under_test.get_column_names(), self.column_names)
+            self.assertCountEqual(object_under_test.get_query_result(), self.data[:1])
 
     def test_query_with_syntax_error(self):
         self.assertRaises(QueryExecutionError, Query, global_pcm.pg_db_name, 'OOPS *')
