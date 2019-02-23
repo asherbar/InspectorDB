@@ -61,7 +61,14 @@ This option assumes you have a database instance running (at least one) that can
 -   "port": 1234
 -   "dbname": "mydbname"
 
-Step by step (from the root of this repository):
+Step by step:
+
+1.  Clone this repository to your machine:  
+    `git clone https://github.com/asherbar/InspectorDB.git`
+    
+1.  Change the directory to the project's root:  
+    `cd InspectorDB`
+
 1.  Execute: `export DB_CREDENTIALS='[{"username": "myuser", "password": "mypass","hostname": "myhostname","port": 1234,"dbname": "mydbname"}]'`
 1.  Execute: `export SECRET_KEY='shh'`  
     Note: It's always better to [generate](https://www.miniwebtool.com/django-secret-key-generator/) a real secret key and use it instead.
@@ -70,6 +77,14 @@ Step by step (from the root of this repository):
 1.  Execute: `python manage.py runserver`
 
 This will run Inspector D.B. locally and will make it available via <http://localhost:8000/>, or something similar.
+
+## Run with Docker
+Every change in the `master` branch, automatically triggers an docker image construction in [Docker Hub](https://cloud.docker.com/repository/docker/asherbar/inspector_db). With this image you can run a containerized Inspector D.B. with the `docker run` command. Note that the [Dockerfile](https://github.com/asherbar/InspectorDB/blob/ccb33a3d29b51c77e95ed9fdd67f4ad86de1bc68/Dockerfile#L7) exposes port 8000. This means that when running the container this port must be mapped for the app to be usable.    
+The following example will run a container with a custom `SECRET_KEY`, in [debug mode](#debug_option), and map the exposed port to 8000.
+```bash
+docker run -e SECRET_KEY='shh' -e DEBUG=1 -p 8000:8000/tcp asherbar/inspector_db
+```
+The application is now available at <http://0.0.0.0:8000/>.
 
 ## Options
 Set the following environment variables to use the possible options:
@@ -99,6 +114,7 @@ Set the following environment variables to use the possible options:
     When this option is given, other credentials that might be given via VCAP_SERVICES (if used in CF), are ignored
 
 -   **QUERY_ROWS_LIMIT**- the number of rows to be retrieved when executing a query. Default is 50 rows.
+-   <a name="debug_option"></a>**DEBUG**- when set to `1` (which is read as _true_) then run in debug mode. Default in `0` (which is read as _false_). See [Django's documentation](https://docs.djangoproject.com/en/2.2/ref/settings/#debug) for more details.
 
 ## Run Tests
 ### Test environment
