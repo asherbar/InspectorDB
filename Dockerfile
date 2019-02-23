@@ -4,4 +4,3 @@ RUN mkdir /inspectorDB
 WORKDIR /inspectorDB
 COPY . /inspectorDB/
 RUN pip install -r requirements.txt
-CMD [ "sh", "-c", "python manage.py collectstatic --noinput && gunicorn project.wsgi:application" ]
