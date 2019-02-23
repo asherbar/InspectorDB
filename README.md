@@ -20,9 +20,11 @@ Inspector-D.B. is an SQL client, built as a web application, that aims to give a
     `cd InspectorDB`
 
 1.  Copy and rename the manifest template - [manifest-template.yml](manifest-template.yml), to `manifest.yml`.
+
 1.  In the newly created `manifest.yml`, replace the following placeholders:
 
-    1.  `<YOUR SECRET KEY>`- this could be any string, but it's best not to use a trivial one (e.g., an empty string). The value is used by the [Django framework](https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-SECRET_KEY). You can generate your own [here](https://www.miniwebtool.com/django-secret-key-generator/). 
+    1.  `<YOUR SECRET KEY>`- this could be any string, but it's best not to use a trivial one (e.g., an empty string). The value is used by the [Django framework](https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-SECRET_KEY). You can generate your own [here](https://www.miniwebtool.com/django-secret-key-generator/).
+
     1.  `<YOUR POSTGRES SERVICE INSTANCE NAME>`- (optional) the name of the Postgres service instance which is the target of the inspection. You may not specify any service instance (in which case the application will have nothing to inspect), or specify more than one instances (in which case the application will let you choose which instance to inspect during runtime).  
     For example, if the database's instance needing inspection is named `myappspostgres`, `manifest.yml` should look like this (the secret key should be different, of course):
     ```yaml
@@ -65,15 +67,18 @@ Step by step:
 
 1.  Clone this repository to your machine:  
     `git clone https://github.com/asherbar/InspectorDB.git`
-    
+
 1.  Change the directory to the project's root:  
     `cd InspectorDB`
 
 1.  Execute: `export DB_CREDENTIALS='[{"username": "myuser", "password": "mypass","hostname": "myhostname","port": 1234,"dbname": "mydbname"}]'`
+
 1.  Execute: `export SECRET_KEY='shh'`  
     Note: It's always better to [generate](https://www.miniwebtool.com/django-secret-key-generator/) a real secret key and use it instead.
+
 1.  Execute: `export DEBUG=1`  
     Warning: Do not run in production with `DEBUG=1`!
+
 1.  Execute: `python manage.py runserver`
 
 This will run Inspector D.B. locally and will make it available via <http://localhost:8000/>, or something similar.
@@ -90,8 +95,11 @@ The application is now available at <http://0.0.0.0:8000/>.
 Set the following environment variables to use the possible options:
 
 -   **READONLY**- when set to 0 (which is read as _false_) allows the user to execute write commands (such as UPDATE, DROP TABLE etc.). If not set the default is 1 which is read as _true_ which limits the user to execute read-only commands (such as SELECT).
+
 -   **SESSION_COOKIE_AGE**- the number of inactivity minutes before the user is automatically logged out. Default is 1209600 (two weeks).
+
 -   **VCAP_SERVICE_LABEL**- the label of the postgres service. Default is _postgresql_.
+
 -   <a name="db_creds_options"></a>**DB_CREDENTIALS**- if given, then assumed to be a string that's a valid JSON list, where each object in the list contains a full set of database credentials, which are:
     -   username
     -   password
@@ -114,6 +122,7 @@ Set the following environment variables to use the possible options:
     When this option is given, other credentials that might be given via VCAP_SERVICES (if used in CF), are ignored
 
 -   **QUERY_ROWS_LIMIT**- the number of rows to be retrieved when executing a query. Default is 50 rows.
+
 -   <a name="debug_option"></a>**DEBUG**- when set to `1` (which is read as _true_) then run in debug mode. Default in `0` (which is read as _false_). See [Django's documentation](https://docs.djangoproject.com/en/2.2/ref/settings/#debug) for more details.
 
 ## Run Tests
