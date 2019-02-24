@@ -126,7 +126,7 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_BROWSER_XSS_FILTER = True
-    SECURE_SSL_REDIRECT = not OptionSslRedirect().get_option()
+    SECURE_SSL_REDIRECT = OptionSslRedirect().get_option()
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     X_FRAME_OPTIONS = 'DENY'
