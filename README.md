@@ -23,8 +23,6 @@ Inspector-D.B. is an SQL client, built as a web application, that aims to give a
 
 1.  In the newly created `manifest.yml`, replace the following placeholders:
 
-    1.  `<YOUR SECRET KEY>`- this could be any string, but it's best not to use a trivial one (e.g., an empty string). The value is used by the [Django framework](https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-SECRET_KEY). You can generate your own [here](https://www.miniwebtool.com/django-secret-key-generator/).
-
     1.  `<YOUR POSTGRES SERVICE INSTANCE NAME>`- (optional) the name of the Postgres service instance which is the target of the inspection. You may not specify any service instance (in which case the application will have nothing to inspect), or specify more than one instances (in which case the application will let you choose which instance to inspect during runtime).  
     For example, if the database's instance needing inspection is named `myappspostgres`, `manifest.yml` should look like this (the secret key should be different, of course):
     ```yaml
@@ -34,8 +32,6 @@ Inspector-D.B. is an SQL client, built as a web application, that aims to give a
       command: python manage.py collectstatic --noinput && gunicorn project.wsgi:application
       services:
       - myappspostgres
-      env:
-        SECRET_KEY: '(2x@zp+!%=qg*ut$rm$ijij@)%miaw_934_+wlb!5g&5lc*)bd'
       buildpacks:
       - https://github.com/cloudfoundry/python-buildpack#v1.6.25
     ```
@@ -45,8 +41,6 @@ Inspector-D.B. is an SQL client, built as a web application, that aims to give a
     applications:
     - name: inspector-db
       command: python manage.py collectstatic --noinput && gunicorn project.wsgi:application
-      env:
-        SECRET_KEY: '(2x@zp+!%=qg*ut$rm$ijij@)%miaw_934_+wlb!5g&5lc*)bd'
       buildpacks:
       - https://github.com/cloudfoundry/python-buildpack#v1.6.25
     ```
@@ -72,9 +66,6 @@ Step by step:
     `cd InspectorDB`
 
 1.  Execute: `export DB_CREDENTIALS='[{"username": "myuser", "password": "mypass","hostname": "myhostname","port": 1234,"dbname": "mydbname"}]'`
-
-1.  Execute: `export SECRET_KEY='shh'`  
-    Note: It's always better to [generate](https://www.miniwebtool.com/django-secret-key-generator/) a real secret key and use it instead.
 
 1.  Execute: `export DEBUG=1`  
     Warning: Do not run in production with `DEBUG=1`!

@@ -4,8 +4,5 @@ applications:
   command: python manage.py collectstatic --noinput && gunicorn project.wsgi:application
   services:
   - <YOUR POSTGRES SERVICE INSTANCE NAME>
-  env:
-    SECRET_KEY: '<YOUR SECRET KEY>'
-    # More options go here
   buildpacks:
   - https://github.com/cloudfoundry/python-buildpack#v1.6.25
