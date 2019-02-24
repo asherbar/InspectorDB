@@ -5,4 +5,4 @@ WORKDIR /inspectorDB
 COPY . /inspectorDB/
 RUN pip install -r requirements.txt
 EXPOSE 8000
-CMD [ "sh", "-c", "python manage.py runserver 0.0.0.0:8000" ]
+CMD [ "sh", "-c", "python manage.py collectstatic --noinput && gunicorn -b 0.0.0.0:8000 project.wsgi:application" ]
