@@ -12,10 +12,11 @@ The shortest way to run Inspector D.B. in CF is by `pushing` the [docker image](
 ### Prerequisites
 -   [Cloud Foundry CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html)
 
+Simply execute the following:
 ```bash
 cf push inspector-db --docker-image  asherbar/inspector_db:latest
 ```
-And that's it! CF will pull the docker from DockerHub and start the application in the targeted space.
+And that's it! CF will pull the docker image from DockerHub and start the application in the targeted space.
 
 ## Run in Cloud Foundry
 ### Prerequisites
