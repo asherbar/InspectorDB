@@ -66,3 +66,8 @@ class OptionQueryRowsLimit(Option):
 
     def __init__(self):
         super().__init__(self.ENV_KEY, 50, int)
+
+
+class OptionSslRedirect(Option):
+    def __init__(self):
+        super().__init__('SECURE_SSL_REDIRECT', True, _str_to_bool)

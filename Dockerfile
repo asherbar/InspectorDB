@@ -1,5 +1,6 @@
 FROM python:3.6
 ENV PYTHONUNBUFFERED 1
+ENV SECURE_SSL_REDIRECT 0
 RUN mkdir /inspectorDB
 WORKDIR /inspectorDB
 COPY . /inspectorDB/
