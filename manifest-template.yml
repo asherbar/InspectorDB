@@ -1,7 +1,7 @@
 ---
 applications:
 - name: inspector-db
-  command: python manage.py collectstatic --noinput && gunicorn project.wsgi:application
+  command: python manage.py migrate && python manage.py collectstatic --noinput && gunicorn project.wsgi:application
   services:
   - <YOUR POSTGRES SERVICE INSTANCE NAME>
   buildpacks:
