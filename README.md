@@ -41,7 +41,7 @@ And that's it! CF will pull the docker image from DockerHub and start the applic
     ---
     applications:
     - name: inspector-db
-      command: python manage.py collectstatic --noinput && gunicorn project.wsgi:application
+      command: python manage.py migrate && python manage.py collectstatic --noinput && gunicorn project.wsgi:application
       services:
       - myappspostgres
       buildpacks:
@@ -52,7 +52,7 @@ And that's it! CF will pull the docker image from DockerHub and start the applic
     ---
     applications:
     - name: inspector-db
-      command: python manage.py collectstatic --noinput && gunicorn project.wsgi:application
+      command: python manage.py migrate && python manage.py collectstatic --noinput && gunicorn project.wsgi:application
       buildpacks:
       - https://github.com/cloudfoundry/python-buildpack#v1.6.25
     ```
