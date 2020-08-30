@@ -3,6 +3,9 @@ import os
 import sys
 from pathlib import Path
 
+import project.test_utils.postgres_container_utils as pcu
+from project.test_utils.postgres_container_utils import PostgresContainerManager
+
 project_root = str(Path(os.path.dirname(os.path.realpath(__file__))).parents[1])
 
 try:
@@ -12,8 +15,6 @@ except ImportError:
     # Add project root to path:
     sys.path.append(project_root)
     import manage
-import project.test_utils.postgres_container_utils as pcu
-from project.test_utils.postgres_container_utils import PostgresContainerManager
 
 
 def main():
