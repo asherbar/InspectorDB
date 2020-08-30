@@ -1,7 +1,7 @@
-django>=2.1.6
+django>=3.1,<4.0
 psycopg2==2.7.6.1
 gunicorn
 django-widget-tweaks==1.4.3
 docker==3.7.0
 pypika==0.22.3
-whitenoise==4.1.2
+whitenoise>=5.2.0,<6.0
