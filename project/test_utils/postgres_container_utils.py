@@ -5,6 +5,7 @@ from time import time as now, sleep
 import docker
 import docker.errors
 import psycopg2
+import requests
 
 from app.logic.utils.logger_utils import get_logger
 
@@ -35,6 +36,9 @@ class PostgresContainerManager:
         except docker.errors.ImageNotFound:
             logger.info('postgres docker image not found. Trying to pull the image')
             postgres_image = self._docker_client.images.pull('postgres', 'latest')
+        except requests.exceptions.ConnectionError:
+            logger.error('Unable to connect to docker client. Make sure docker is installed and running')
+            raise
         logger.info('Starting test container')
         container_port = '5432/tcp'
         running_container_id = self._docker_client.containers.run(postgres_image, detach=True,

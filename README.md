@@ -129,6 +129,7 @@ Set the following environment variables to use the possible options:
 -   <a name="debug_option"></a>**DEBUG**- when set to `1` (which is read as _true_) then run in debug mode. Default in `0` (which is read as _false_). See [Django's documentation](https://docs.djangoproject.com/en/2.2/ref/settings/#debug) for more details.
 
 ## Run Tests
+*Requires `docker` to be installed and running*
 ### Test environment
 In order to test code as realistically as possible, all tests are run against a [docker based PostgreSQL](https://hub.docker.com/_/postgres) instance. Before the tests run, the image is downloaded if it doesn't already exist. While the docker will be erased after the tests complete, the image will not in order to make future runs faster. The image can be erased manually with [Docker's CLI](https://docs.docker.com/engine/reference/commandline/cli/).
 ### Test execution
