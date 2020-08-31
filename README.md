@@ -79,10 +79,13 @@ Step by step:
 
 1.  Execute: `export DB_CREDENTIALS='[{"username": "myuser", "password": "mypass","hostname": "myhostname","port": 1234,"dbname": "mydbname"}]'`
 
-1.  Execute: `export DEBUG=1`  
+1.  Execute: `export DEBUG=1` (this is required for accessing the local server via HTTP instead of HTTPS)  
     Warning: Do not run in production with `DEBUG=1`!
 
-1.  Execute: `python manage.py runserver`
+1.  Execute: `python manage.py runserver`.  
+    *Note*: The first time running may require first executing `python manage.py migrate`. See [Django's docs](https://docs.djangoproject.com/en/3.1/ref/django-admin/#django-admin-migrate) for more on this command.
+
+
 
 This will run Inspector D.B. locally and will make it available via <http://localhost:8000/>, or something similar.
 
