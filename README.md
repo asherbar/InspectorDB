@@ -65,9 +65,12 @@ This will upload this app to the [targeted CF space](http://cli.cloudfoundry.org
 This option assumes you have a database instance running (at least one) that can be connected to by using the credentials given via [DB_CREDENTIALS](#db_creds_options). In the following example we'll assume the DB has the following credentials:
 -   "username": "myuser"
 -   "password": "mypass"
--   "hostname": "myhostname"
--   "port": 1234
--   "dbname": "mydbname"
+-   "hostname": "localhost"
+-   "port": 5432
+-   "dbname": "mydb"
+
+For example, by running the following docker locally:
+`docker run --name some-postgres -e POSTGRES_PASSWORD=mypass -e POSTGRES_USER=myuser -e POSTGRES_DB=mydb -d -p 5432:5432 postgres`
 
 Step by step:
 
