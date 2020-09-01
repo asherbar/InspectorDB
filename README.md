@@ -83,7 +83,8 @@ Step by step:
     Warning: Do not run in production with `DEBUG=1`!
 
 1.  Execute: `python manage.py runserver`.  
-    *Note*: The first time running may require first executing `python manage.py migrate`. See [Django's docs](https://docs.djangoproject.com/en/3.1/ref/django-admin/#django-admin-migrate) for more on this command.
+    *Note 1*: The first time running may require first executing `python manage.py migrate`. See [Django's docs](https://docs.djangoproject.com/en/3.1/ref/django-admin/#django-admin-migrate) for more on this command.
+    *Note 2*: If accessing the local server returns an "Incorrect padding" error page, clear your browser's cookies for the localhost site and refresh the page.
 
 
 
